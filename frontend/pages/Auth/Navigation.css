@@ -1,0 +1,81 @@
+/* Container styling */
+#navigation-container {
+  width: 4%;
+  height: 100vh; /* Full-screen height */
+  background-color: black; /* Black background */
+  position: fixed; /* Stick to the screen */
+  top: 0; /* Start at the top of the screen */
+  left: 0; /* Align to the left */
+  overflow: hidden; /* Hide overflowing content */
+  transition: width 0.3s ease-in-out; /* Smooth width transition */
+  padding-left: 10px;
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Align items vertically */
+  justify-content: space-between; /* Distribute items between top and bottom */
+}
+
+/* Make the container expand on hover */
+#navigation-container:hover {
+  width: 15%; /* Expand the container on hover */
+}
+
+/* Nav item styling */
+#navigation-container a {
+  display: flex; /* Flex for icon and text alignment */
+  align-items: center; /* Center vertically */
+  padding: 1rem 0; /* Add spacing between items */
+  color: white; /* Set text color to white */
+  text-decoration: none; /* Remove underline from links */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+/* Hover effect for nav items */
+#navigation-container a:hover {
+  transform: translateX(10px); /* Slight movement on hover */
+}
+
+/* Icon styling */
+#navigation-container svg {
+  color: white; /* Ensure icons are visible */
+  margin-right: 0.5rem; /* Space between icon and text */
+  size: 26px; /* Standard size for icons */
+}
+
+/* Nav item name styling */
+.nav-item-name {
+  color: white; /* Ensure text is visible */
+  display: none; /* Initially hide the text */
+  opacity: 0; /* Transparent by default */
+  transition: opacity 0.2s ease-in-out; /* Smooth opacity change */
+}
+
+/* Show nav item names when hovering over the container */
+#navigation-container:hover .nav-item-name {
+  display: block; /* Show the text */
+  opacity: 1; /* Make the text fully visible */
+}
+
+/* Ensure icons and text align consistently */
+#navigation-container .nav-item-name {
+  font-size: 1rem; /* Adjust font size for text */
+}
+
+/* Move the <ul> to the bottom */
+#navigation-container ul {
+  margin-top: auto; /* Push the ul to the bottom */
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 768px) {
+  #navigation-container {
+    width: 10%;
+  }
+
+  #navigation-container:hover {
+    width: 20%;
+  }
+
+  #navigation-container .nav-item-name {
+    font-size: 0.9rem; /* Slightly smaller font size */
+  }
+}
