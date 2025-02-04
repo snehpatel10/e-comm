@@ -33,17 +33,17 @@ const UserOrder = () => {
             {orders?.map((order) => (
               <div
                 key={order._id}
-                className="bg-gray-800 rounded-xl shadow-lg p-6 hover:bg-gray-700 transition-colors duration-300"
+                className="bg-[#4b445e] rounded-xl shadow-lg p-6 hover:bg-[#5d566e] transition-colors duration-300"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-white">Order ID: {order._id}</h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-white">
                       Ordered on {formatDate(order.createdAt)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-400">
+                    <p className="text-white">
                       <strong>Status:</strong>{" "}
                       {order.isPaid ? (
                         <span className="text-green-400">Paid</span>
@@ -51,7 +51,7 @@ const UserOrder = () => {
                         <span className="text-red-400">Pending</span>
                       )}
                     </p>
-                    <p className="text-gray-400">
+                    <p className="text-white">
                       <strong>Delivery:</strong>{" "}
                       {order.isDelivered ? (
                         <span className="text-green-400">Delivered</span>
@@ -82,16 +82,16 @@ const UserOrder = () => {
 
                 <div className="border-t border-gray-700 pt-4">
                   {order.isPaid && !order.isDelivered && (
-                    <p className="text-gray-400">
+                    <p className="text-white">
                       <strong>Expected delivery date:</strong> {calculateDeliveryDate(order.paidAt)}
                     </p>
                   )}
                   {order.isDelivered && order.deliveredAt && (
-                    <p className="text-gray-400">
+                    <p className="text-white">
                       <strong>Delivered on:</strong> {formatDate(order.deliveredAt)}
                     </p>
                   )}
-                  <p className="text-gray-400">
+                  <p className="text-white">
                     <strong>Total:</strong> ₹{order.totalPrice}
                   </p>
                 </div>

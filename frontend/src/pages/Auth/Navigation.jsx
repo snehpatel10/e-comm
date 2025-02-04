@@ -118,7 +118,7 @@ const Navigation = () => {
       style={{ zIndex: 999 }}
       className={`${
         showSidebar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-black w-[4%] hover:w-[15%] h-[100vh] fixed `}
+      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-[#282828] w-[4%] hover:w-[15%] h-[100vh] fixed `}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4">
@@ -198,7 +198,7 @@ const Navigation = () => {
             ref={dropdownRef}
             className={`absolute ${
               dropdownAlignment === "right" ? "right-0" : "left-0"
-            } mt-2 space-y-2 bg-gray-800 text-white rounded-lg shadow-lg transition-all duration-300 ease-out transform ${
+            } mt-2 space-y-2 bg-[#8c7cb6] text-black rounded-lg shadow-lg transition-all duration-300 ease-out transform ${
               dropdownOpen ? "opacity-100" : "opacity-0"
             }`}
             style={{
@@ -262,7 +262,7 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={logoutHandler}
-                className="block px-4 py-2 text-white rounded-md hover:bg-red-700 transition-all"
+                className="block px-4 py-2 text-black rounded-md hover:bg-red-700 transition-all"
               >
                 Logout
               </Link>
