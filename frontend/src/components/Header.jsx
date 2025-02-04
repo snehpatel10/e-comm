@@ -18,14 +18,14 @@ function Header() {
   return (
     <div className="flex flex-col lg:flex-row justify-between items-start gap-6 p-4">
       {/* Product List */}
-      <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-2">
         {data.map((product) => (
           <SmallProduct key={product._id} product={product} />
         ))}
       </div>
 
       {/* Carousel */}
-      <div className="w-full lg:w-1/2">
+      <div className="lg:w-1/2">
         <ProductCarousel />
       </div>
     </div>

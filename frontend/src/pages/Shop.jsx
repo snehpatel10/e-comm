@@ -77,7 +77,7 @@ const Shop = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-12">
-      <div className="flex flex-col md:flex-row bg-[#0f0f10] min-h-screen">
+      <div className="flex flex-col md:flex-row bg-[#0f0f10] min-h-screen ml-[1.5rem]">
         {/* Filter Section */}
         <div className="bg-[#151515] p-5 rounded-lg shadow-lg w-full md:w-1/4 mb-6 md:mb-0">
           <h2 className="text-center text-white py-2 mb-4 bg-black rounded-full">Filter by Categories</h2>

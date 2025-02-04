@@ -3,12 +3,30 @@
 @tailwind utilities;
 
 body {
-    background: #121212 ;
-    color: #fff;
-  }
-  
-  input,
-  textarea {
-    color: #000;
-  }
+  background: #121212;
+  color: #fff;
+}
 
+/* More intense dark themed scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Darker track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333; /* Darker thumb */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444; /* Slightly lighter thumb on hover */
+}
+
+input,
+textarea {
+  color: #000;
+}

@@ -212,7 +212,7 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/dashboard"
-                    className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                    className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200  "
                   >
                     Dashboard
                   </Link>
@@ -220,7 +220,7 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/productlist"
-                    className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                    className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200"
                   >
                     Products
                   </Link>
@@ -228,7 +228,7 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/categorylist"
-                    className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                    className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200"
                   >
                     Category
                   </Link>
@@ -236,7 +236,7 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/orderlist"
-                    className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                    className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200"
                   >
                     Orders
                   </Link>
@@ -244,7 +244,7 @@ const Navigation = () => {
                 <li>
                   <Link
                     to="/admin/userlist"
-                    className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                    className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200"
                   >
                     Users
                   </Link>
@@ -254,7 +254,7 @@ const Navigation = () => {
             <li>
               <Link
                 to="/profile"
-                className="block px-4 py-2 hover:bg-slate-700 rounded-md transition-all"
+                className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200"
               >
                 Profile
               </Link>
@@ -262,7 +262,7 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={logoutHandler}
-                className="block px-4 py-2 text-black rounded-md hover:bg-red-700 transition-all"
+                className="block px-4 py-2 text-black rounded-md hover:bg-red-700 hover:text-white transition-all duration-200"
               >
                 Logout
               </Link>
