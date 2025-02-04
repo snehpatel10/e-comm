@@ -94,12 +94,12 @@ const Order = () => {
   ) : (
     <div className="container ml-[5rem] max-w-screen-lg mx-auto overflow-x-hidden flex flex-col md:flex-row px-4 py-5">
       <div className="w-full md:w-2/3 pr-4">
-        <div className=" mt-5 pb-4 mb-5">
+        <div className=" mt-5 pb-4 mb-10">
           {order.orderItems.length === 0 ? (
             <Messsage>Order is empty</Messsage>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full table-auto border-2 border-[#E85D92] text-sm shadow-lg rounded-lg overflow-hidden text-white">
+              <table className="w-full table-auto border-2 border-[#E85D92] text-sm shadow-lg  rounded-lg overflow-hidden text-white">
                 <thead className="bg-[#2A1824] text-[#E85D92] uppercase text-xs tracking-wide border-b border-[#E85D92]">
                   <tr>
                     <th className="p-3 text-left">Image</th>
@@ -118,9 +118,7 @@ const Order = () => {
                     return (
                       <tr
                         key={index}
-                        className={`${
-                          index % 2 === 0 ? "bg-[#261421]" : "bg-[#1B1018]"
-                        }  transition duration-200`}
+                        className='bg-[#261421]'
                       >
                         <td className="p-3">
                           <img
