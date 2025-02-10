@@ -2,6 +2,7 @@ import { resolveObjectURL } from "buffer";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import Order from "../models/order.model.js";
 import Product from "../models/product.model.js";
+import Notification from "../models/notification.model.js";
 import sendEmail from "../utils/nodemailer.js";
 import moment from "moment";
 import { log } from "console";
@@ -77,6 +78,16 @@ export const createOrder = async (req, res) => {
     });
 
     const createdOrder = await order.save();
+
+    const notification = new Notification({
+      username: req.user.username, // Username of the person who placed the order
+      orderId: createdOrder._id,   // Reference to the order
+      message: `New order placed by ${req.user.username}. Order ID: ${createdOrder._id}`, // Customize your message
+      type: 'order', // Type of notification
+    });
+
+    await notification.save(); // Save the notification to the database
+
     res.status(201).json(createdOrder);
   } catch (error) {
     res.status(500).json({ error: error.message });

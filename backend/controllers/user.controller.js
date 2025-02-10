@@ -156,7 +156,10 @@ export const updateUserById = asyncHandler(async (req, res) => {
   if(user) {
     user.username = req.body.username || user.username
     user.email = req.body.email || user.email
-    user.isAdmin = Boolean(req.body.isAdmin)
+    // user.isAdmin = Boolean(req.body.isAdmin)
+    if (req.body.hasOwnProperty('isAdmin')) {
+      user.isAdmin = Boolean(req.body.isAdmin)
+    }
 
     const updatedUser = await user.save()
 
@@ -169,5 +172,18 @@ export const updateUserById = asyncHandler(async (req, res) => {
   } else {
     res.status(404)
     throw new Error('User not found')
+  }
+})
+
+export const getNotifications = asyncHandler(async (req, res) => {
+  try {
+    // Fetch notifications for the admin, sorted by createdAt (most recent first)
+    const notifications = await Notification.find({})
+      .sort({ createdAt: -1 }); // -1 for descending order (newest first)
+
+    // Respond with the notifications
+    res.status(200).json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 })

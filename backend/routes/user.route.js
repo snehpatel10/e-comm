@@ -9,6 +9,7 @@ import {
   deleteUserById,
   getUserById,
   updateUserById,
+  getNotifications
 } from "../controllers/user.controller.js";
 import {
   authenticate,
@@ -35,5 +36,7 @@ router
   .delete(authenticate, authorizeAdmin, deleteUserById)
   .get(authenticate, authorizeAdmin, getUserById)
   .put(authenticate, authorizeAdmin, updateUserById);
+
+router.route('/notification').get(authenticate,authorizeAdmin, getNotifications)
 
 export default router;
