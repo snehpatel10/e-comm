@@ -10,7 +10,8 @@ import {
   countTotalSalesByDate,
   findOrderById,
   markOrderAsPaid,
-  markOrderAsDelivered
+  markOrderAsDelivered,
+  markOrderAsPaidPOD
 } from "../controllers/order.controller.js";
 
 import {
@@ -36,6 +37,8 @@ router.route('/:id').get(authenticate, findOrderById)
 router.route('/:id/pay').put(authenticate, markOrderAsPaid)
 
 router.route('/:id/deliver').put(authenticate, authorizeAdmin, markOrderAsDelivered)
+
+router.route('/:id/payon-delivery').put(authenticate, authorizeAdmin, markOrderAsPaidPOD);
 
 
 export default router;
