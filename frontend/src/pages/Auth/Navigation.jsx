@@ -7,6 +7,7 @@ import {
   AiOutlineUserAdd,
 } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
+import { IoNotifications } from "react-icons/io5"
 import { Link, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +17,7 @@ import FavoritesCount from "../Products/FavoritesCount";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const {cartItems} = useSelector((state) => state.cart)
+  const { cartItems } = useSelector((state) => state.cart)
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -116,9 +117,8 @@ const Navigation = () => {
     <div
       ref={navRef}
       style={{ zIndex: 999 }}
-      className={`${
-        showSidebar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-[#1b1b1b] w-[4%] hover:w-[15%] h-[100vh] fixed `}
+      className={`${showSidebar ? "hidden" : "flex"
+        } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-[#1b1b1b] w-[4%] hover:w-[15%] h-[100vh] fixed `}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4">
@@ -146,7 +146,7 @@ const Navigation = () => {
             {cartItems.length > 0 && (
               <span>
                 <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
-                  {cartItems.reduce((a,c) => a + c.qty, 0     )}
+                  {cartItems.reduce((a, c) => a + c.qty, 0)}
                 </span>
               </span>
             )}
@@ -160,6 +160,15 @@ const Navigation = () => {
           <span className="hidden nav-item-name mt-[3rem]">FAVORITE</span>
           <FavoritesCount />
         </Link>
+        {userInfo && userInfo.isAdmin && (
+          <Link
+            to="/admin/notification"
+            className="flex items-center transition-transform transform hover:translate-x-2"
+          >
+            <IoNotifications className="mr-2 mt-[3rem]" size={26} />
+            <span className="hidden nav-item-name mt-[3rem] uppercase">Notification</span>
+          </Link>
+        )}
       </div>
 
       <div className="relative">
@@ -176,9 +185,8 @@ const Navigation = () => {
           {userInfo && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 ml-1 ${
-                dropdownOpen ? "transform rotate-180" : ""
-              }`}
+              className={`h-4 w-4 ml-1 ${dropdownOpen ? "transform rotate-180" : ""
+                }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="white"
@@ -196,11 +204,9 @@ const Navigation = () => {
         {dropdownOpen && userInfo && (
           <ul
             ref={dropdownRef}
-            className={`absolute ${
-              dropdownAlignment === "right" ? "right-0" : "left-0"
-            } mt-2 space-y-2 bg-[#8c7cb6] text-black rounded-lg shadow-lg transition-all duration-300 ease-out transform ${
-              dropdownOpen ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute ${dropdownAlignment === "right" ? "right-0" : "left-0"
+              } mt-2 space-y-2 bg-[#8c7cb6] text-black rounded-lg shadow-lg transition-all duration-300 ease-out transform ${dropdownOpen ? "opacity-100" : "opacity-0"
+              }`}
             style={{
               minWidth: "150px",
               top: dropdownPosition === "bottom" ? "100%" : "auto",
