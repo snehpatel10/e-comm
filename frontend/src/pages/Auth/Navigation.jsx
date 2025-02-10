@@ -6,8 +6,8 @@ import {
   AiOutlineLogin,
   AiOutlineUserAdd,
 } from "react-icons/ai";
-import { FaHeart } from "react-icons/fa";
-import { IoNotifications } from "react-icons/io5"
+import { HiOutlineHeart } from "react-icons/hi";
+import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -156,7 +156,7 @@ const Navigation = () => {
           to="/favorite"
           className="flex items-center transition-transform transform hover:translate-x-2"
         >
-          <FaHeart className="mr-2 mt-[3rem]" size={26} />
+          <HiOutlineHeart className="mr-2 mt-[3rem]" size={26} />
           <span className="hidden nav-item-name mt-[3rem]">FAVORITE</span>
           <FavoritesCount />
         </Link>
@@ -165,7 +165,7 @@ const Navigation = () => {
             to="/admin/notification"
             className="flex items-center transition-transform transform hover:translate-x-2"
           >
-            <IoNotifications className="mr-2 mt-[3rem]" size={26} />
+            <MdOutlineNotificationsNone className="mr-2 mt-[3rem]" size={26} />
             <span className="hidden nav-item-name mt-[3rem] uppercase">Notification</span>
           </Link>
         )}
