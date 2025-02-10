@@ -167,7 +167,7 @@ const ProductList = () => {
 <div className="flex flex-wrap justify-between">
     <div className="w-[48%]">
       <label htmlFor="stock" className="text-white">
-        Count In Stock
+        Purchase limit
       </label>{" "}
       <br />
       <input

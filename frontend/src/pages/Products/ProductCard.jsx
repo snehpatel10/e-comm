@@ -1,4 +1,5 @@
 import React from "react";
+import DOMPurify from 'dompurify'
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -37,9 +38,7 @@ const ProductCard = ({ p }) => {
       </p>
     </div>
 
-    <p className="mb-3 font-normal text-[#CFCFCF] flex-grow">
-      {p?.description?.substring(0, 60)}...
-    </p>
+    <p className="mb-3 font-normal text-[#CFCFCF] flex-grow" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(p?.description?.substring(0, 60)) + '...' }} />
 
     <section className="flex items-center justify-between gap-x-2 mt-auto">
       <Link to={`/product/${p._id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-pink-700 rounded-lg hover:bg-pink-800">
