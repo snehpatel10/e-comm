@@ -15,8 +15,6 @@ const AdminProductUpdate = () => {
 
   const { data: productData } = useGetProductByIdQuery(params.id);
 
-//  console.log(productData)
-
   const [image, setImage] = useState(productData?.image || "");
   const [name, setName] = useState(productData?.name || "");
   const [description, setDescription] = useState(productData?.description || "");
@@ -25,14 +23,14 @@ const AdminProductUpdate = () => {
   const [quantity, setQuantity] = useState(productData?.quantity || "");
   const [brand, setBrand] = useState(productData?.brand || "");
   const [stock, setStock] = useState(productData?.countInStock);
-
+  
+  const [errors, setErrors] = useState({});
+  
   const navigate = useNavigate();
   const { data: categories = [] } = useFetchCategoriesQuery();
   const [uploadProductImage] = useUploadProductImageMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
-
-//  console.log("Categories:", categories);
 
   useEffect(() => {
     if (productData && productData._id) {
@@ -46,7 +44,6 @@ const AdminProductUpdate = () => {
       setStock(productData.countInStock);
     }
   }, [productData]);
-  
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
@@ -60,11 +57,46 @@ const AdminProductUpdate = () => {
     }
   };
 
+  const validateFields = () => {
+    let tempErrors = {};
+    let formIsValid = true;
+
+    if (!name) {
+      formIsValid = false;
+      tempErrors.name = "Name is required.";
+    }
+    if (!price || isNaN(price) || price < 0) {
+      formIsValid = false;
+      tempErrors.price = "Price must be a number greater than or equal to 0.";
+    }
+    if (!quantity || isNaN(quantity) || quantity < 0) {
+      formIsValid = false;
+      tempErrors.quantity = "Quantity must be a number greater than or equal to 0.";
+    }
+    if (!stock || isNaN(stock) || stock < 0) {
+      formIsValid = false;
+      tempErrors.stock = "Purchase limit must be a number greater than or equal to 0.";
+    }
+    if (!category) {
+      formIsValid = false;
+      tempErrors.category = "Category is required.";
+    }
+    if (!description) {
+      formIsValid = false;
+      tempErrors.description = "Description is required.";
+    }
+
+    setErrors(tempErrors);
+    return formIsValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check the values before submission
-//    console.log("Before submit", { image, name, description, price, category, quantity, brand, stock });
+    // Validate form fields
+    if (!validateFields()) {
+      return; // If validation fails, don't submit the form
+    }
 
     try {
       const formData = new FormData();
@@ -72,14 +104,12 @@ const AdminProductUpdate = () => {
       formData.append("name", name);
       formData.append("description", description);
       formData.append("price", price);
-      formData.append("category", category); // Ensure category is correctly set
+      formData.append("category", category);
       formData.append("quantity", quantity);
       formData.append("brand", brand);
       formData.append("countInStock", stock);
 
       const data = await updateProduct({ productId: params.id, formData });
-
-//      console.log("After submit", data);
 
       if (data?.error) {
         toast.error(data.error);
@@ -91,7 +121,6 @@ const AdminProductUpdate = () => {
       toast.error("Failed to update product");
     }
   };
-
 
   const handleDelete = async () => {
     try {
@@ -147,15 +176,17 @@ const AdminProductUpdate = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
+                {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
               </div>
               <div className="w-[48%]">
                 <label htmlFor="price" className="text-white">Price</label>
                 <input
-                  type="number"
+                  type="text"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
+                {errors.price && <div className="text-red-500 text-sm">{errors.price}</div>}
               </div>
             </div>
 
@@ -164,11 +195,12 @@ const AdminProductUpdate = () => {
               <div className="w-[48%]">
                 <label htmlFor="quantity" className="text-white">Quantity</label>
                 <input
-                  type="number"
+                  type="text"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
+                {errors.quantity && <div className="text-red-500 text-sm">{errors.quantity}</div>}
               </div>
               <div className="w-[48%]">
                 <label htmlFor="brand" className="text-white">Brand</label>
@@ -187,17 +219,18 @@ const AdminProductUpdate = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
 
             <div className="flex flex-wrap justify-between">
               <div className="w-[48%]">
                 <label htmlFor="stock" className="text-white">Purchase limit</label>
                 <input
-                  type="number"
-                  min="0"
+                  type="text"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
+                {errors.stock && <div className="text-red-500 text-sm">{errors.stock}</div>}
               </div>
               <div className="w-[48%]">
                 <label htmlFor="category" className="text-white">Category</label>
@@ -212,6 +245,7 @@ const AdminProductUpdate = () => {
                     </option>
                   ))}
                 </select>
+                {errors.category && <div className="text-red-500 text-sm">{errors.category}</div>}
               </div>
             </div>
 

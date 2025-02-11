@@ -18,14 +18,33 @@ const ProductList = () => {
   const [brand, setBrand] = useState("");
   const [stock, setStock] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
 
+  // Custom Validation Function
+  const validateForm = () => {
+    const errors = {};
+    if (!image) errors.image = "Image is required";  // Added validation for image
+    if (!name.trim()) errors.name = "Name is required";
+    if (!description.trim()) errors.description = "Description is required";
+    if (!price || isNaN(price) || price < 0) errors.price = "Price must be a number and >= 0";
+    if (!quantity || isNaN(quantity) || quantity < 0) errors.quantity = "Quantity must be a number and >= 0";
+    if (!stock || isNaN(stock) || stock < 0) errors.stock = "Stock must be a number and >= 0";
+    if (!category) errors.category = "Category is required";
+    if (!brand.trim()) errors.brand = "Brand is required";
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0; // Returns true if no errors
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return; // Only proceed if the form is valid
 
     try {
       const productData = new FormData();
@@ -44,7 +63,7 @@ const ProductList = () => {
         toast.error("Product create failed. Try Again.");
       } else {
         toast.success(`${data.name} is created`);
-        navigate("/");
+        navigate("/admin/allproductslist");
       }
     } catch (error) {
       console.error(error);
@@ -95,6 +114,7 @@ const ProductList = () => {
                 className={!image ? "hidden" : "text-white"}
               />
             </label>
+            {errors.image && <div className="text-red-500 text-sm">{errors.image}</div>}  {/* Display image error */}
           </div>
 
           <div className="p-3">
@@ -107,10 +127,11 @@ const ProductList = () => {
                 <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.name ? 'border-red-500' : ''}`}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
+                {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
               </div>
               <div className="w-[48%]">
                 <label htmlFor="price" className="text-white">
@@ -119,10 +140,11 @@ const ProductList = () => {
                 <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.price ? 'border-red-500' : ''}`}
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
+                {errors.price && <div className="text-red-500 text-sm">{errors.price}</div>}
               </div>
             </div>
 
@@ -135,10 +157,11 @@ const ProductList = () => {
                 <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.quantity ? 'border-red-500' : ''}`}
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
+                {errors.quantity && <div className="text-red-500 text-sm">{errors.quantity}</div>}
               </div>
               <div className="w-[48%]">
                 <label htmlFor="brand" className="text-white">
@@ -147,10 +170,11 @@ const ProductList = () => {
                 <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.brand ? 'border-red-500' : ''}`}
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
+                {errors.brand && <div className="text-red-500 text-sm">{errors.brand}</div>}
               </div>
             </div>
 
@@ -159,43 +183,46 @@ const ProductList = () => {
             </label>
             <textarea
               type="text"
-              className="p-2 mb-3 bg-[#101011] border rounded-lg w-[100%] text-white"
+              className={`p-2 mb-3 bg-[#101011] border rounded-lg w-[100%] text-white ${errors.description ? 'border-red-500' : ''}`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
+            {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
 
-<div className="flex flex-wrap justify-between">
-    <div className="w-[48%]">
-      <label htmlFor="stock" className="text-white">
-        Purchase limit
-      </label>{" "}
-      <br />
-      <input
-        type="number"
-        className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
-        value={stock}
-        onChange={(e) => setStock(e.target.value)}
-      />
-    </div>
-    <div className="w-[48%]">
-      <label htmlFor="category" className="text-white">
-        Category
-      </label>{" "}
-      <br />
-      <select
-        id="category"
-        className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
-        onChange={(e) => setCategory(e.target.value)}
-        value={category}
-      >
-        {categories?.map((c) => (
-          <option key={c._id} value={c._id}>
-            {c.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  </div>
+            <div className="flex flex-wrap justify-between">
+              <div className="w-[48%]">
+                <label htmlFor="stock" className="text-white">
+                  Purchase limit
+                </label>{" "}
+                <br />
+                <input
+                  type="number"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.stock ? 'border-red-500' : ''}`}
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                />
+                {errors.stock && <div className="text-red-500 text-sm">{errors.stock}</div>}
+              </div>
+              <div className="w-[48%]">
+                <label htmlFor="category" className="text-white">
+                  Category
+                </label>{" "}
+                <br />
+                <select
+                  id="category"
+                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.category ? 'border-red-500' : ''}`}
+                  onChange={(e) => setCategory(e.target.value)}
+                  value={category}
+                >
+                  {categories?.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.category && <div className="text-red-500 text-sm">{errors.category}</div>}
+              </div>
+            </div>
 
             <button
               onClick={handleSubmit}
