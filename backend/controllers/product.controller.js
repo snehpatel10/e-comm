@@ -1,3 +1,4 @@
+import { console } from "inspector";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import Product from "../models/product.model.js";
 
@@ -47,6 +48,8 @@ export const updateProduct = asyncHandler(async (req, res) => {
         return res.json({ error: "Quantity is required" });
     }
 
+    console.log(req.params.id);
+
     const product = await Product.findByIdAndUpdate(
       req.params.id,
       { ...req.fields },
@@ -56,7 +59,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     res.json(product);
   } catch (error) {
     console.error(error);
-    res.status(400).json(error.message);
+    res.json(error.message);
   }
 });
 
