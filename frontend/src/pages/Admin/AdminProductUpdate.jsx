@@ -15,7 +15,7 @@ const AdminProductUpdate = () => {
 
   const { data: productData } = useGetProductByIdQuery(params.id);
 
-  console.log(productData)
+//  console.log(productData)
 
   const [image, setImage] = useState(productData?.image || "");
   const [name, setName] = useState(productData?.name || "");
