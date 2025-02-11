@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useEffect } from "react";
+import DOMPurify from 'dompurify'
 import moment from "moment";
 import { useAllProductsQuery } from "../../redux/api/productApiSlice";
 import AdminMenu from "./AdminMenu";
@@ -47,9 +48,9 @@ const AllProducts = () => {
                         </p>
                       </div>
 
-                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4">
-                        {product?.description?.substring(0, 160)}...
-                      </p>
+                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description?.substring(0, 60)) + '...' }}/>
+                        {/* {product?.description?.substring(0, 160)}... */}
+          
 
                       <div className="flex justify-between">
                         <Link
