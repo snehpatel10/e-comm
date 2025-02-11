@@ -5,6 +5,7 @@ import Product from "../models/product.model.js";
 import Notification from "../models/notification.model.js";
 import sendEmail from "../utils/nodemailer.js";
 import moment from "moment";
+import puppeteer from "puppeteer";
 import { log } from "console";
 
 function calcPrices(orderItems) {
@@ -31,6 +32,125 @@ function calcPrices(orderItems) {
     totalPrice: totalPrice.toFixed(2), // Round final total price to 2 decimals
   };
 }
+
+const generateInvoice = async (order) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // Prepare the HTML for the invoice
+  const invoiceHTML = `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+          }
+          .container {
+            width: 80%;
+            margin: auto;
+          }
+          .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #333;
+          }
+          .header h1 {
+            margin: 0;
+            color: #4CAF50;
+          }
+          .order-info {
+            margin-top: 20px;
+            text-align: left;
+          }
+          .order-info p {
+            margin: 5px 0;
+          }
+          .table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+          }
+          .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+          }
+          .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+          }
+          .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>Invoice for Order #${order._id}</h1>
+            <p>${moment(order.paidAt).format('MMMM Do YYYY')}</p>
+          </div>
+
+          <div class="order-info">
+            <p><strong>Customer Name:</strong> ${order.user.username}</p>
+            <p><strong>Email:</strong> ${order.user.email}</p>
+            <p><strong>Shipping Address:</strong> ${order.shippingAddress.address}, ${order.shippingAddress.city}, ${order.shippingAddress.postalCode}</p>
+            <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${order.orderItems.map(item => `
+                <tr>
+                  <td>${item.name}</td>
+                  <td>${item.qty}</td>
+                  <td>$${item.price}</td>
+                  <td>$${(item.price * item.qty).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="total">
+            <p><strong>Subtotal:</strong> $${order.itemsPrice}</p>
+            <p><strong>Shipping:</strong> $${order.shippingPrice}</p>
+            <p><strong>Tax:</strong> $${order.taxPrice}</p>
+            <p><strong>Total Price:</strong> $${order.totalPrice}</p>
+          </div>
+
+          <div class="footer">
+            <p>Thank you for shopping with us!</p>
+            <p>&copy; 2025 E-comm</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  // Set the content and generate the PDF
+  await page.setContent(invoiceHTML);
+  const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+
+  await browser.close();
+  
+  return pdfBuffer;
+};
 
 export const createOrder = async (req, res) => {
   try {
@@ -183,9 +303,10 @@ export const findOrderById = asyncHandler(async(req, res) => {
 
 export const markOrderAsPaid = asyncHandler(async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user', 'username email');
 
     if (order) {
+      // Mark the order as paid
       order.isPaid = true;
       order.paidAt = Date.now();
       order.paymentResult = {
@@ -198,10 +319,10 @@ export const markOrderAsPaid = asyncHandler(async (req, res) => {
       // Calculate the expected delivery date (3 days after the payment date)
       const expectedDeliveryDate = moment(order.paidAt).add(3, 'days').format('MMMM Do YYYY');
 
-      // Save the updated order in the database
-      const updatedOrder = await order.save();
+      // Generate invoice for the order
+      const invoicePDF = await generateInvoice(order);
 
-      // Prepare the email content
+      // Prepare the email content for the user
       const subject = `Payment Successful for Order #${order._id}`;
       const text = `Dear ${req.user.username},\n\nYour payment for Order #${order._id} was successful. The expected delivery date for your order is ${expectedDeliveryDate}.\n\nThank you for shopping with us!`;
       const html = `
@@ -294,8 +415,18 @@ export const markOrderAsPaid = asyncHandler(async (req, res) => {
         </html>
       `;
 
-      // Send the email to the user
-      await sendEmail(req.user.email, subject, text, html);
+      // Send the email to the user with the invoice PDF attached
+      await sendEmail(
+        req.user.email,
+        subject,
+        text,
+        html,
+        invoicePDF, // Attach the generated PDF as an attachment
+        "Invoice.pdf" // Name of the attachment
+      );
+
+      // Save the updated order in the database
+      const updatedOrder = await order.save();
 
       // Return the updated order response to the client
       res.status(200).json(updatedOrder);
@@ -307,6 +438,7 @@ export const markOrderAsPaid = asyncHandler(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 export const markOrderAsDelivered = asyncHandler(async (req, res) => {
     try {

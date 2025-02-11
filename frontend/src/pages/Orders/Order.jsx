@@ -90,6 +90,7 @@
     const deliverHandler = async () => {
       await deliverOrder(orderId);
       refetch();
+      toast.success('Order has been marked as delivered')
     };
 
     const markPaidHandler = async () => {
