@@ -33,10 +33,15 @@ import UserOrder from "./pages/User/UserOrder.jsx";
 import OrderList from "./pages/Admin/OrderList.jsx";
 import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 import Notification from "./pages/Notification.jsx";
+import AuthLayout from "./components/AuthLayout.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
+      <Route path='/forgot-password' element={<ForgotPassword/>} />
+      <Route path='/reset-password/:resetToken' element={<ResetPassword/>} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route index={true} path='/'element={<Home/>}/>

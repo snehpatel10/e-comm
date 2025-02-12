@@ -24,6 +24,29 @@ export const authenticate = asyncHandler(async (req, res, next) => {
   }
 });
 
+export const authenticateResetToken = asyncHandler(async (req, res, next) => {
+  let token = req.cookies.resetToken;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      if (decoded.exp < Date.now() / 1000) {
+        return res.status(401).json({ message: "Token has expired" });
+      }
+
+      req.user = await User.findOne({ email: decoded.userId }).select("-password");
+      next(); 
+    } catch (error) {
+      console.log("Token verification error:", error);
+      return res.status(401).json({ message: "Not authorized, token failed" });
+    }
+  } else {
+    console.log("No resetToken cookie found");
+    return res.status(401).json({ message: "Not authorized, no token found" });
+  }
+});
+
+
 export const authorizeAdmin = (req, res, next) => {
     if(req.user && req.user.isAdmin) {
         next()

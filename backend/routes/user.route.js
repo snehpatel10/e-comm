@@ -9,10 +9,13 @@ import {
   deleteUserById,
   getUserById,
   updateUserById,
-  getNotifications
+  getNotifications,
+  forgotPassword,
+  resetPassword
 } from "../controllers/user.controller.js";
 import {
   authenticate,
+  authenticateResetToken,
   authorizeAdmin,
 } from "../middlewares/auth.middleware.js";
 
@@ -37,6 +40,9 @@ router
   .get(authenticate, authorizeAdmin, getUserById)
   .put(authenticate, authorizeAdmin, updateUserById);
 
-router.route('/notification').get(authenticate,authorizeAdmin, getNotifications)
+//router.route('/notification').get(authenticate,authorizeAdmin, getNotifications)
+
+router.route('/forgot-password').post(forgotPassword)
+router.route('/reset-password').post(authenticateResetToken, resetPassword)
 
 export default router;
