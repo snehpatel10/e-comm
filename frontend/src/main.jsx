@@ -36,6 +36,7 @@ import Notification from "./pages/Notification.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
+import NotFound from "./components/NotFound.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,6 +70,7 @@ const router = createBrowserRouter(
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="notification" element={<Notification/>}/>
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

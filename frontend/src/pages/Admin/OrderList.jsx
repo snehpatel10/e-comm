@@ -24,7 +24,7 @@ const OrderList = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="flex-1 p-6 lg:ml-16"> {/* Add lg:ml-16 for left margin on large screens */}
+        <div className="flex-1 p-6 lg:ml-12"> {/* Add lg:ml-16 for left margin on large screens */}
           <AdminMenu />
           <div className="overflow-x-auto ">
             <table className="min-w-full text-gray-300">
@@ -36,7 +36,7 @@ const OrderList = () => {
                   <th className="px-6 py-3 text-left">Paid Status</th>
                   <th className="px-6 py-3 text-left">Delivery Status</th>
                   <th className="px-6 py-3 text-left">Expected Delivery</th>
-                  <th className="px-6 py-3 text-left">Actions</th>
+                  <th className="px-6 py-3 text-left"></th>
                 </tr>
               </thead>
               <tbody>

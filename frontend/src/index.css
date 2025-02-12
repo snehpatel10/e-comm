@@ -8,6 +8,27 @@ body {
   font-family: 'Quicksand', sans-serif;
 }
 
+/* Add this to your global CSS (like index.css or App.css) */
+@keyframes toast-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.toast-pop {
+  animation: toast-pop 0.5s ease-out;
+}
+
+
 /* More intense dark themed scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

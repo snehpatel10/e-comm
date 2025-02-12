@@ -22,6 +22,8 @@ const AdminDashboard = () => {
     options: {
       chart: {
         type: "bar",
+        fontFamily: "Quicksand, sans-serif", // Set font family to "Quicksand"
+        foreColor: "#fff", // Set font color to white for chart
       },
       tooltip: {
         theme: "dark",
@@ -29,6 +31,7 @@ const AdminDashboard = () => {
       colors: ["#00E396"],
       dataLabels: {
         enabled: true,
+        formatter: (value) => parseFloat(value).toFixed(2),
       },
       stroke: {
         curve: "smooth",
@@ -36,6 +39,9 @@ const AdminDashboard = () => {
       title: {
         text: "Sales Trend",
         align: "left",
+        style: {
+          color: "#fff", // Set title color to white
+        },
       },
       grid: {
         borderColor: "#ccc",
@@ -47,13 +53,25 @@ const AdminDashboard = () => {
         categories: [],
         title: {
           text: "Date",
+          style: {
+            color: "#fff", // Set x-axis label color to white
+          },
         },
       },
       yaxis: {
         title: {
           text: "Sales",
+          style: {
+            color: "#fff", // Set y-axis label color to white
+          },
         },
         min: 0,
+        labels: {
+          formatter: (value) => parseFloat(value).toFixed(2),
+          style: {
+            color: "#fff", // Set y-axis label color to white
+          },
+        },
       },
       legend: {
         position: "top",
@@ -61,6 +79,9 @@ const AdminDashboard = () => {
         floating: true,
         offsetY: -25,
         offsetX: -5,
+        labels: {
+          colors: "#fff", // Set legend color to white
+        },
       },
     },
     series: [{ name: "Sales", data: [] }],
@@ -81,7 +102,6 @@ const AdminDashboard = () => {
             categories: formattedSalesDate.map((item) => item.x),
           },
         },
-
         series: [
           { name: "Sales", data: formattedSalesDate.map((item) => item.y) },
         ],
@@ -93,8 +113,8 @@ const AdminDashboard = () => {
     <>
       <AdminMenu />
 
-      <section className="xl:ml-[4rem] md:ml-[0rem]">
-        <div className="w-[80%] flex justify-around flex-wrap">
+      <section className="flex justify-center items-center flex-col">
+        <div className="w-full flex justify-around flex-wrap xl:ml-[4rem] md:ml-[0rem]">
           <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaDollarSign size={20} color="#fff" />
@@ -134,16 +154,16 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="ml-[10rem] mt-[4rem]">
+        <div className="mt-[4rem] w-full xl:w-[75%] lg:w-[80%] md:w-[85%]">
           <Chart
             options={state.options}
             series={state.series}
             type="bar"
-            width="70%"
+            width="100%"
           />
         </div>
 
-        <div className="mt-[4rem]">
+        <div className="mt-[4rem] w-full flex justify-center">
           <OrderList />
         </div>
       </section>

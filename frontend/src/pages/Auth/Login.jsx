@@ -6,11 +6,13 @@ import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import { ReactTyped } from "react-typed"; // Import react-typed
+import { IoEye, IoEyeOff } from "react-icons/io5"; // Import icons for show/hide password
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -69,7 +71,7 @@ function Login() {
         <div className="w-full lg:w-1/2 p-8">
           <h1 className="text-3xl font-semibold mb-6 text-white ml-8">Welcome Back</h1>
           <form onSubmit={submitHandler} className="w-full max-w-md mx-auto">
-            {/* Email */}
+
             <div className="my-4">
               <label htmlFor="email" className="block text-sm font-medium text-white">
                 Email
@@ -77,26 +79,33 @@ function Login() {
               <input
                 type="text"
                 id="email"
-                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none focus:border-[#ff007f] transition-all ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
+                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none  transition-all ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value.toLowerCase())}
               />
               {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
             </div>
 
-            {/* Password */}
-            <div className="my-4">
+            <div className="my-4 relative">
               <label htmlFor="password" className="block text-sm font-medium text-white">
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
-                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none focus:border-[#ff007f] transition-all ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
+                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none  transition-all ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
+              {password && (
+                <div
+                  className="absolute top-10 right-4 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <IoEyeOff size={20} color="#fff" /> : <IoEye size={20} color="#fff" />}
+                </div>
+              )}
             </div>
 
             <div className="text-right">
@@ -105,7 +114,6 @@ function Login() {
               </Link>
             </div>
 
-            {/* Submit Button */}
             <button
               disabled={isLoading}
               type="submit"
@@ -127,24 +135,21 @@ function Login() {
           </div>
         </div>
 
-        {/* Right Side: React-Typed for Dynamic Text */}
+        {/* Right Side: React-Typed */}
         <div className="w-1/2 hidden lg:flex justify-center items-center text-white p-8">
           <ReactTyped
             strings={[
-              "Welcome to the <span style='color: #ff007f;'>Future</span> of <span style='color: #ffd700;'>Shopping</span>",
-              "A <span style='color: #ff6347;'>Seamless</span> Experience <span style='color: #32cd32;'>Awaits</span>",
-              "<span style='color: #00bfff;'>Sign In</span> to Get <span style='color: #ff1493;'>Started</span>",
+              "Discover the <span class='text-[#FFD700] font-bold'>Future</span> of <span class='text-[#FF6347]'>Shopping</span>.",
+              "Unveil <span class='text-[#32CD32] font-bold'>Seamless</span> <span class='text-[#FF1493]'>Experiences</span> with Us.",
+              "<span class='text-[#00BFFF] font-bold'>Sign in</span> to begin Your <span class='text-[#FF6347]'>Journey</span> Now!",
             ]}
             typeSpeed={70}
             backSpeed={50}
             backDelay={1000}
             loop
-            className="text-4xl font-semibold text-center font-julius" // Applying Julius Sans One font here
+            className="text-5xl font-normal text-center font-inter tracking-tight leading-snug"
           />
         </div>
-
-
-
       </section>
     </div>
   );

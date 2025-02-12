@@ -5,6 +5,7 @@ import Loader from "../../components/Loader";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../redux/api/userApiSlice";
+import { IoEye, IoEyeOff } from "react-icons/io5"; // Import show/hide password icons
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,6 +13,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password visibility
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,25 +74,23 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-[95vh] bg-[#121212]">
+    <div className="flex justify-center items-center h-screen bg-[#121212]">
       <section className="flex w-full max-w-5xl overflow-hidden">
         {/* Left Side: Image */}
-        <div className="w-1/2 hidden lg:block  ">
+        <div className="w-1/2 hidden lg:block">
           <img
             src="https://cdn4.iconfinder.com/data/icons/social-network-71/64/Verified_Account-Social_Media-Assign-Check-Friendly-1024.png"
             alt="Registration"
-            className="max-w-[400px] w-full h-[60vh] object-contain rounded-l-lg pl-10 mt-24  " // Adjust the width and maintain the aspect ratio
+            className="max-w-[400px] w-full h-[60vh] object-contain rounded-l-lg pl-10 mt-24"
           />
         </div>
-
 
         {/* Right Side: Form */}
         <div className="w-full lg:w-1/2 p-8">
           <h1 className="text-2xl font-semibold mb-4 text-white">Create an account</h1>
           <form onSubmit={submitHandler} className="w-full max-w-md mx-auto">
-            {/* Username */}
             <div className="my-4">
-              <label htmlFor="name" className="block text-sm font-medium text-white ">
+              <label htmlFor="name" className="block text-sm font-medium text-white">
                 Name
               </label>
               <input
@@ -102,7 +103,6 @@ function Register() {
               {errors.username && <div className="text-red-500 text-sm">{errors.username}</div>}
             </div>
 
-            {/* Email */}
             <div className="my-4">
               <label htmlFor="email" className="block text-sm font-medium text-white">
                 Email
@@ -117,33 +117,51 @@ function Register() {
               {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
             </div>
 
-            {/* Password */}
             <div className="my-4">
               <label htmlFor="password" className="block text-sm font-medium text-white">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className={`mt-1 p-2 pl-3 pr-10 border rounded w-full bg-[#2c2c2c] text-white ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {password && (
+                  <div
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <IoEyeOff size={20} color="#fff" /> : <IoEye size={20} color="#fff" />}
+                  </div>
+                )}
+              </div>
               {errors.password && <div className="text-red-500 text-sm">{errors.password}</div>}
             </div>
 
-            {/* Confirm Password */}
             <div className="my-4">
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
                 Confirm Password
               </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.confirmPassword ? 'border-red-500' : 'border-gray-600'}`}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  className={`mt-1 p-2 pl-3 pr-10 border rounded w-full bg-[#2c2c2c] text-white ${errors.confirmPassword ? 'border-red-500' : 'border-gray-600'}`}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {confirmPassword && (
+                  <div
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <IoEyeOff size={20} color="#fff" /> : <IoEye size={20} color="#fff" />}
+                  </div>
+                )}
+              </div>
               {errors.confirmPassword && <div className="text-red-500 text-sm">{errors.confirmPassword}</div>}
             </div>
 

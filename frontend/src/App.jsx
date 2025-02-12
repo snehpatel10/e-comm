@@ -27,12 +27,17 @@ function App() {
         pauseOnHover
         theme="dark"
         toastStyle={{
-          backgroundColor: '#444',
+          backgroundColor: '#222', // Dark gray background
           color: '#fff',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)',
+          borderRadius: '12px', // Ensure rounded corners
+          border: '2px solid transparent', // Transparent border for blending effect
+          backgroundImage: 'linear-gradient(45deg, #222, #333)', // Subtle gradient for blending with the background
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)', // Deeper shadow for 3D effect
           fontSize: '16px',
           padding: '12px 20px',
+          fontFamily: 'Quicksand, sans-serif', // Quicksand font
+          transform: 'scale(1) perspective(600px) rotateY(0deg)', // 3D effect transform
+          transition: 'transform 0.3s ease-out, box-shadow 0.3s ease-out', // smooth transitions
         }}
         progressStyle={{
           backgroundColor: '#ff9800',
@@ -40,7 +45,18 @@ function App() {
         closeButtonStyle={{
           color: '#fff',
         }}
+        onEnter={(toast) => {
+          // Adding animation on toast enter for 3D effect
+          toast.style.transform = 'scale(1.1) perspective(600px) rotateY(15deg)';
+          toast.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)'; // Deeper shadow on enter
+        }}
+        onExited={(toast) => {
+          // Reset the transform and shadow when the toast exits
+          toast.style.transform = 'scale(1) perspective(600px) rotateY(0deg)';
+          toast.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)'; // Reset shadow
+        }}
       />
+
       {/* Hide navbar for /forgot-password or any /reset-password route */}
       {!hideNavbarRoutes.includes(location.pathname) && !isResetPassword && <Navigation />}
       <main className='py-3'>
