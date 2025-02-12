@@ -72,15 +72,16 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center h-[95vh] bg-[#121212]">
-      <section className="flex w-full max-w-5xl shadow-[4px_4px_10px_rgba(255,0,115,0.2)] overflow-hidden">
+      <section className="flex w-full max-w-5xl overflow-hidden">
         {/* Left Side: Image */}
-        <div className="w-1/2 hidden lg:block">
+        <div className="w-1/2 hidden lg:block  ">
           <img
-            src="https://images.unsplash.com/photo-1576502200916-3808e07386a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80"
+            src="https://cdn4.iconfinder.com/data/icons/social-network-71/64/Verified_Account-Social_Media-Assign-Check-Friendly-1024.png"
             alt="Registration"
-            className="h-full w-full object-cover rounded-l-lg"
+            className="max-w-[400px] w-full h-[60vh] object-contain rounded-l-lg pl-10 mt-24  " // Adjust the width and maintain the aspect ratio
           />
         </div>
+
 
         {/* Right Side: Form */}
         <div className="w-full lg:w-1/2 p-8">

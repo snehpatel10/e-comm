@@ -5,6 +5,7 @@ import { useLoginMutation } from "../../redux/api/userApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
+import { ReactTyped } from "react-typed"; // Import react-typed
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -62,11 +63,11 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-[95vh] bg-[#121212]">
-      <section className="flex w-full max-w-5xl  shadow-[4px_4px_10px_rgba(255,0,115,0.2)] overflow-hidden">
+    <div className="flex justify-center items-center min-h-screen ">
+      <section className="flex w-full max-w-6xl  overflow-hidden rounded-lg">
         {/* Left Side: Form */}
         <div className="w-full lg:w-1/2 p-8">
-          <h1 className="text-2xl font-semibold mb-4 text-white">Welcome back</h1>
+          <h1 className="text-3xl font-semibold mb-6 text-white ml-8">Welcome Back</h1>
           <form onSubmit={submitHandler} className="w-full max-w-md mx-auto">
             {/* Email */}
             <div className="my-4">
@@ -76,11 +77,11 @@ function Login() {
               <input
                 type="text"
                 id="email"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
+                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none focus:border-[#ff007f] transition-all ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value.toLowerCase())}
               />
-              {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
+              {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
             </div>
 
             {/* Password */}
@@ -91,11 +92,11 @@ function Login() {
               <input
                 type="password"
                 id="password"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
+                className={`mt-1 p-3 border-2 rounded w-full bg-[#2c2c2c] text-white focus:outline-none focus:border-[#ff007f] transition-all ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {errors.password && <div className="text-red-500 text-sm">{errors.password}</div>}
+              {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
             </div>
 
             <div className="text-right">
@@ -108,7 +109,7 @@ function Login() {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-pink-500 text-white px-4 py-2 rounded my-4 w-full hover:bg-pink-600"
+              className="bg-pink-500 text-white px-4 py-2 rounded my-4 w-full hover:bg-pink-600 transition-all"
             >
               {isLoading ? "Signing In..." : "Sign In"}
             </button>
@@ -126,14 +127,24 @@ function Login() {
           </div>
         </div>
 
-        {/* Right Side: Image */}
-        <div className="w-1/2 hidden lg:block">
-          <img
-            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
-            alt="Login"
-            className="h-full w-full object-cover "
+        {/* Right Side: React-Typed for Dynamic Text */}
+        <div className="w-1/2 hidden lg:flex justify-center items-center text-white p-8">
+          <ReactTyped
+            strings={[
+              "Welcome to the <span style='color: #ff007f;'>Future</span> of <span style='color: #ffd700;'>Shopping</span>",
+              "A <span style='color: #ff6347;'>Seamless</span> Experience <span style='color: #32cd32;'>Awaits</span>",
+              "<span style='color: #00bfff;'>Sign In</span> to Get <span style='color: #ff1493;'>Started</span>",
+            ]}
+            typeSpeed={70}
+            backSpeed={50}
+            backDelay={1000}
+            loop
+            className="text-4xl font-semibold text-center font-julius" // Applying Julius Sans One font here
           />
         </div>
+
+
+
       </section>
     </div>
   );
