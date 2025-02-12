@@ -12,16 +12,16 @@ function ResetPassword() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [isResetSuccess, setIsResetSuccess] = useState(false);
+  const [isResetFailed, setIsResetFailed] = useState(false); // New state for failed reset
 
-  const {userInfo} = useSelector(state => state.auth)
-
+  const { userInfo } = useSelector(state => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(userInfo) {
-      navigate('/')
+    if (userInfo) {
+      navigate('/');
     }
-  }, [userInfo, navigate])
+  }, [userInfo, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +42,11 @@ function ResetPassword() {
           setIsResetSuccess(true);
         } else {
           setError(response.data.message || 'An error occurred');
+          setIsResetFailed(true); // Mark the reset as failed
         }
       } catch (err) {
         setError(err.response?.data?.message || 'An error occurred');
+        setIsResetFailed(true); // Mark the reset as failed
       }
     }
   };
@@ -53,10 +55,17 @@ function ResetPassword() {
   useEffect(() => {
     if (isResetSuccess) {
       setTimeout(() => {
-        navigate('/login',{replace: true}); // Redirect to login page
+        navigate('/login', { replace: true }); // Redirect to login page
       }, 3000); // 3 seconds delay
     }
-  }, [isResetSuccess, navigate]);
+
+    if (isResetFailed) {
+      // Redirect to forgot password page after 4 seconds on failure
+      setTimeout(() => {
+        navigate('/forgot-password', { replace: true }); // Redirect to forgot-password page
+      }, 4000); // 4 seconds delay
+    }
+  }, [isResetSuccess, isResetFailed, navigate]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -128,6 +137,12 @@ function ResetPassword() {
         {isResetSuccess && (
           <div className="mt-4 text-green-500 text-sm text-center">
             <p>Password has been reset successfully. Redirecting to login...</p>
+          </div>
+        )}
+
+        {isResetFailed && (
+          <div className="mt-4 text-red-500 text-sm text-center">
+            <p>Password reset failed. Redirecting to forgot password page...</p>
           </div>
         )}
       </div>
