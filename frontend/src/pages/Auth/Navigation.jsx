@@ -204,59 +204,60 @@ const Navigation = () => {
         </button>
 
         {dropdownOpen && userInfo && (
-          <ul
-            ref={dropdownRef}
-            className={`absolute ${dropdownAlignment === "right" ? "right-0" : "left-0"} mt-2 space-y-2 bg-[#8c7cb6] text-black rounded-lg shadow-lg transition-all duration-300 ease-out transform ${dropdownOpen ? "opacity-100" : "opacity-0"}`}
-            style={{
-              minWidth: "150px",
-              top: dropdownPosition === "bottom" ? "100%" : "auto",
-              bottom: dropdownPosition === "top" ? "100%" : "auto",
-            }}
-          >
-            {/* Admin Links */}
-            {userInfo.isAdmin && (
-              <>
-                <li>
-                  <Link to="/admin/dashboard" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/admin/productlist" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/admin/categorylist" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                    Category
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/admin/orderlist" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                    Orders
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/admin/userlist" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                    Users
-                  </Link>
-                </li>
-              </>
-            )}
+  <ul
+    ref={dropdownRef}
+    className={`absolute mt-2 bg-gray-600 text-white  rounded-lg shadow-lg transition-all duration-300 ease-out transform ${dropdownOpen ? "opacity-100" : "opacity-0"} ${dropdownAlignment === "right" ? "right-0" : "left-0"}`}
+    style={{
+      minWidth: "150px",
+      top: dropdownPosition === "bottom" ? "100%" : "auto",
+      bottom: dropdownPosition === "top" ? "100%" : "auto",
+    }}
+  >
+    {/* Admin Links */}
+    {userInfo.isAdmin && (
+      <>
+        <li>
+          <Link to="/admin/dashboard" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link to="/admin/productlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link to="/admin/categorylist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+            Category
+          </Link>
+        </li>
+        <li>
+          <Link to="/admin/orderlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+            Orders
+          </Link>
+        </li>
+        <li>
+          <Link to="/admin/userlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+            Users
+          </Link>
+        </li>
+      </>
+    )}
 
-            {/* User Links */}
-            <li>
-              <Link to="/profile" className="block px-4 py-2 hover:bg-[#6e5f8f] rounded-md transition-all duration-200">
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link onClick={logoutHandler} className="block px-4 py-2 text-black rounded-md hover:bg-red-700 hover:text-white transition-all duration-200">
-                Logout
-              </Link>
-            </li>
-          </ul>
-        )}
+    {/* User Links */}
+    <li>
+      <Link to="/profile" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+        Profile
+      </Link>
+    </li>
+    <li>
+      <Link onClick={logoutHandler} className="block px-4 py-2  rounded-md hover:bg-red-700 hover:text-white transition-all duration-200">
+        Logout
+      </Link>
+    </li>
+  </ul>
+)}
+
       </div>
 
 

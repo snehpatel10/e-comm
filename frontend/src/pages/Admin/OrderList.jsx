@@ -16,7 +16,7 @@ const OrderList = () => {
   };
 
   return (
-    <div className=" min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -24,10 +24,14 @@ const OrderList = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="flex-1 p-6 lg:ml-12"> {/* Add lg:ml-16 for left margin on large screens */}
-          <AdminMenu />
-          <div className="overflow-x-auto ">
-            <table className="min-w-full text-gray-300">
+        <div className="flex-1 p-6 lg:ml-12">
+          {/* Adjust the AdminMenu position */}
+          <div className="relative z-10">
+            <AdminMenu />
+          </div>
+
+          <div className="overflow-x-auto mt-10">
+            <table className="min-w-full table text-gray-300">
               <thead className="border-b border-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left">Order ID</th>
@@ -41,7 +45,10 @@ const OrderList = () => {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order._id} className="border-b border-gray-700 hover:bg-gray-800">
+                  <tr
+                    key={order._id}
+                    className="border-b border-gray-700 hover:bg-gray-800"
+                  >
                     <td className="px-6 py-4">{order._id}</td>
                     <td className="px-6 py-4">
                       {order.orderItems.length === 1 ? (
@@ -61,7 +68,8 @@ const OrderList = () => {
                             className="w-12 h-12 object-cover rounded-md"
                           />
                           <span className="ml-4">
-                            {order.orderItems[0].name} + {order.orderItems.length - 1} more items
+                            {order.orderItems[0].name} +{" "}
+                            {order.orderItems.length - 1} more items
                           </span>
                         </div>
                       )}
@@ -82,11 +90,9 @@ const OrderList = () => {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      {order.isPaid && !order.isDelivered ? (
-                        calculateDeliveryDate(order.paidAt)
-                      ) : (
-                        "N/A"
-                      )}
+                      {order.isPaid && !order.isDelivered
+                        ? calculateDeliveryDate(order.paidAt)
+                        : "N/A"}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex space-x-4">
@@ -96,7 +102,6 @@ const OrderList = () => {
                         >
                           View Details
                         </Link>
-                       
                       </div>
                     </td>
                   </tr>

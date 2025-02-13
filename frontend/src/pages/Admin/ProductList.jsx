@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useCreateProductMutation,
@@ -24,6 +24,13 @@ const ProductList = () => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
+
+  useEffect(() => {
+      document.body.style.overflowX = "hidden";
+      return () => {
+        document.body.style.overflowX = "auto";
+      };
+    }, []);
 
   // Custom Validation Function
   const validateForm = () => {
@@ -90,7 +97,7 @@ const ProductList = () => {
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
+          <div className="h-12 text-xl">Create Product</div>
 
           {imageUrl && (
             <div className="text-center">
@@ -103,17 +110,16 @@ const ProductList = () => {
           )}
 
           <div className="mb-3">
-            <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
-              {image ? image.name : "Upload Image"}
+            <div className=" text-white px-4 block w-full text-center rounded-lg font-bold py-11">
 
               <input
                 type="file"
                 name="image"
                 accept="image/*"
                 onChange={uploadFileHandler}
-                className={!image ? "hidden" : "text-white"}
+                className="file-input file-input-bordered text-white"
               />
-            </label>
+            </div>
             {errors.image && <div className="text-red-500 text-sm">{errors.image}</div>}  {/* Display image error */}
           </div>
 
@@ -127,7 +133,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="text"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.name ? 'border-red-500' : ''}`}
+                  className={`p-4 mb-3 w-full border rounded-lg input input-bordered text-white ${errors.name ? 'border-red-500' : ''}`}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -140,7 +146,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="number"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.price ? 'border-red-500' : ''}`}
+                  className={`p-4 mb-3 w-full border rounded-lg input input-bordered text-white ${errors.price ? 'border-red-500' : ''}`}
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -157,7 +163,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="number"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.quantity ? 'border-red-500' : ''}`}
+                  className={`p-4 mb-3 w-full border rounded-lg input input-bordered text-white ${errors.quantity ? 'border-red-500' : ''}`}
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
@@ -170,7 +176,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="text"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.brand ? 'border-red-500' : ''}`}
+                  className={`p-4 mb-3 w-full border rounded-lg input input-bordered text-white ${errors.brand ? 'border-red-500' : ''}`}
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
@@ -183,7 +189,7 @@ const ProductList = () => {
             </label>
             <textarea
               type="text"
-              className={`p-2 mb-3 bg-[#101011] border rounded-lg w-[100%] text-white ${errors.description ? 'border-red-500' : ''}`}
+              className={`p-2 mb-3 textarea textarea-bordered border rounded-lg w-[100%] text-white ${errors.description ? 'border-red-500' : ''}`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
@@ -197,7 +203,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="number"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.stock ? 'border-red-500' : ''}`}
+                  className={`p-4 mb-3 w-full border rounded-lg input input-bordered text-white ${errors.stock ? 'border-red-500' : ''}`}
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
@@ -210,7 +216,7 @@ const ProductList = () => {
                 <br />
                 <select
                   id="category"
-                  className={`p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white ${errors.category ? 'border-red-500' : ''}`}
+                  className={` mb-3 w-full border rounded-lg select select-bordered  text-white ${errors.category ? 'border-red-500' : ''}`}
                   onChange={(e) => setCategory(e.target.value)}
                   value={category}
                 >
@@ -226,7 +232,7 @@ const ProductList = () => {
 
             <button
               onClick={handleSubmit}
-              className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
+              className=" mt-5 rounded-lg text-lg font-bold btn btn-primary"
             >
               Submit
             </button>

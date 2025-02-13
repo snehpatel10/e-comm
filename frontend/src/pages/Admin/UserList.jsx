@@ -11,100 +11,107 @@ import Message from "../../components/Message";
 import AdminMenu from "./AdminMenu";
 
 function UserList() {
-    const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-    const [deleteUser] = useDeleteUserMutation();
-    const [updateUser] = useUpdateUserMutation();
-  
-    const [editableUserId, setEditableUserId] = useState(null);
-    const [editableUserName, setEditableUserName] = useState(" ");
-    const [editableUserEmail, setEditableUserEmail] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userToDelete, setUserToDelete] = useState(null);
-  
-    useEffect(() => {
+  const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+  const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
+
+  const [editableUserId, setEditableUserId] = useState(null);
+  const [editableUserName, setEditableUserName] = useState(" ");
+  const [editableUserEmail, setEditableUserEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  const deleteHandler = async () => {
+    try {
+      if (userToDelete) {
+        await deleteUser(userToDelete);
+        toast.success('User deleted successfully');
+        setIsModalOpen(false);
+        refetch(); // Refetch to get updated data
+      }
+    } catch (error) {
+      toast.error(error.data.message || error.error);
+    }
+  };
+
+  const updateHandler = async (id) => {
+    try {
+      await updateUser({
+        userId: id,
+        username: editableUserName,
+        email: editableUserEmail
+      });
+      setEditableUserId(null);
       refetch();
-    }, [refetch]);
-  
-    const deleteHandler = async () => {
-      try {
-        if (userToDelete) {
-          await deleteUser(userToDelete);
-          toast.success('User deleted successfully');
-          setIsModalOpen(false);
-          refetch(); // Refetch to get updated data
-        }
-      } catch (error) {
-        toast.error(error.data.message || error.error);
-      }
-    };
-  
-    const updateHandler = async (id) => {
-      try {
-        await updateUser({
-          userId: id,
-          username: editableUserName,
-          email: editableUserEmail
-        });
-        setEditableUserId(null);
-        refetch();
-        toast.success('User updated successfully')  
-      } catch (error) {
-        toast.error(error.data.message || error.error);
-      }
-    };
-  
-    const toggleEdit = (id, username, email) => {
-      setEditableUserId(id);
-      setEditableUserName(username);
-      setEditableUserEmail(email);
-    };
-  
-    const openModal = (userId) => {
-      setUserToDelete(userId);
-      setIsModalOpen(true);
-    };
-  
-    const closeModal = () => {
-      setIsModalOpen(false);
-      setUserToDelete(null);
-    };
-  
-    return (
-      <div className="p-4">
-        <h1 className=" pl-[8rem] text-2xl font-semibold mb-6 text-white">Users</h1>
+      toast.success('User updated successfully')
+    } catch (error) {
+      toast.error(error.data.message || error.error);
+    }
+  };
+
+  const toggleEdit = (id, username, email) => {
+    setEditableUserId(id);
+    setEditableUserName(username);
+    setEditableUserEmail(email);
+  };
+
+  const openModal = (userId) => {
+    setUserToDelete(userId);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setUserToDelete(null);
+  };
+
+  return (
+    <div className="flex">
+      {/* Admin Menu */}
+      <div className="fixed top-0 left-0 h-full w-[1px]  z-20"> 
+        <AdminMenu />
+      </div>
+
+      {/* Main Content */}
+      <div className="p-4 w-full">
+        <h1 className="pl-[8rem] text-2xl font-semibold mb-6 text-white">Users</h1>
         {isLoading ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error?.data.message || error.message}</Message>
         ) : (
           <div className="flex flex-col md:flex-row">
-            <AdminMenu />
-            <table className="w-full md:w-4/5 mx-auto table-auto border-collapse text-white">
+            {/* Table */}
+            <table className="w-full table table-pin-cols md:w-4/5 mx-auto table-auto border-collapse text-white">
               <thead>
                 <tr className="text-xl">
                   <th className="px-6 py-3 text-left border-b">ID</th>
                   <th className="px-6 py-3 text-left border-b">NAME</th>
                   <th className="px-6 py-3 text-left border-b">EMAIL</th>
                   <th className="px-6 py-3 text-left border-b">ADMIN</th>
-                  <th className="px-6 py-3 text-left border-b">ACTIONS</th>
+                  <th className="px-6 py-3 text-left border-b"></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-lg">
                 {users.map((user) => (
-                  <tr key={user._id} className="hover:bg-gray-700 transition-colors">
+                  <tr key={user._id} className="hover:scale-105 hover:font-bold transition-scale duration-500">
                     <td className="px-6 py-4 border-b">{user._id}</td>
                     <td className="px-6 py-4 border-b">
                       {editableUserId === user._id ? (
-                        <div className="flex items-center">
+                        <div className="relative flex items-center">
                           <input
                             type="text"
                             value={editableUserName}
                             onChange={(e) => setEditableUserName(e.target.value)}
-                            className="w-full p-2 border rounded-lg bg-gray-800 text-white"
+                            className="w-full input input-bordered bg-gray-800 p-2 border rounded-lg text-white pr-10" // Adjust padding-right slightly
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-4 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-blue-500 hover:bg-black hover:text-white transition-all duration-200 rounded-lg p-2"
                           >
                             <FaCheck />
                           </button>
@@ -123,16 +130,16 @@ function UserList() {
                     </td>
                     <td className="px-6 py-4 border-b">
                       {editableUserId === user._id ? (
-                        <div className="flex items-center">
+                        <div className="relative flex items-center">
                           <input
                             type="text"
                             value={editableUserEmail}
                             onChange={(e) => setEditableUserEmail(e.target.value)}
-                            className="w-full p-2 border rounded-lg bg-gray-800 text-white"
+                            className="w-full input input-bordered p-2 bg-gray-800 border rounded-lg text-white pr-10" // Adjusted padding-right
                           />
                           <button
                             onClick={() => updateHandler(user._id)}
-                            className="ml-4 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-blue-500 hover:bg-black hover:text-white transition-all duration-200 rounded-lg p-2"
                           >
                             <FaCheck />
                           </button>
@@ -156,12 +163,12 @@ function UserList() {
                         <FaTimes style={{ color: "red" }} />
                       )}
                     </td>
-                    <td className="px-6 py-4 border-b">
+                    <td className="border-b">
                       {!user.isAdmin && (
                         <div className="flex justify-center items-center">
                           <button
                             onClick={() => openModal(user._id)}
-                            className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
+                            className="btn btn-error text-white rounded-lg"
                           >
                             <FaTrash />
                           </button>
@@ -172,8 +179,8 @@ function UserList() {
                 ))}
               </tbody>
             </table>
-  
-            {/* Flowbite Modal for Delete Confirmation */}
+
+            {/* Modal content */}
             {isModalOpen && (
               <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
                 <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -181,7 +188,7 @@ function UserList() {
                   <div className="flex justify-between">
                     <button
                       onClick={deleteHandler}
-                      className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700"
+                      className="btn btn-error text-white px-6 py-3 rounded-lg "
                     >
                       Yes, delete
                     </button>
@@ -198,8 +205,8 @@ function UserList() {
           </div>
         )}
       </div>
-    );
-  }
-  
-  export default UserList;
-  
+    </div>
+  );
+}
+
+export default UserList;

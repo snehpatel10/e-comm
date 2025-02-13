@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { IoEye } from "react-icons/io5";
-import { IoEyeOff } from "react-icons/io5";
+import { IoEye, IoEyeOff } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import axios
 
 function ResetPassword() {
-  const [password, setPassword] = useState('  ');
+  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [isResetSuccess, setIsResetSuccess] = useState(false);
-  const [isResetFailed, setIsResetFailed] = useState(false); // New state for failed reset
+  const [isResetFailed, setIsResetFailed] = useState(false);
 
   const { userInfo } = useSelector(state => state.auth);
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation for password matching and non-empty fields
     if (!password || !confirmPassword) {
       setError('Both fields are required');
     } else if (password !== confirmPassword) {
@@ -40,11 +38,11 @@ function ResetPassword() {
           setIsResetSuccess(true);
         } else {
           setError(response.data.message || 'An error occurred');
-          setIsResetFailed(true); 
+          setIsResetFailed(true);
         }
       } catch (err) {
         setError(err.response?.data?.message || 'An error occurred');
-        setIsResetFailed(true); 
+        setIsResetFailed(true);
       }
     }
   };
@@ -52,14 +50,14 @@ function ResetPassword() {
   useEffect(() => {
     if (isResetSuccess) {
       setTimeout(() => {
-        navigate('/login', { replace: true }); 
-      }, 3000); 
+        navigate('/login', { replace: true });
+      }, 3000);
     }
 
     if (isResetFailed) {
       setTimeout(() => {
-        navigate('/forgot-password', { replace: true }); 
-      }, 4000); 
+        navigate('/forgot-password', { replace: true });
+      }, 4000);
     }
   }, [isResetSuccess, isResetFailed, navigate]);
 
@@ -69,17 +67,24 @@ function ResetPassword() {
         <h1 className="text-2xl font-semibold text-center mb-8">Reset Your Password</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-white mb-2">
-              Enter your new password
-            </label>
-            <div className="relative">
+            <label htmlFor="password" className="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70">
+                <path
+                  fillRule="evenodd"
+                  d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                  clipRule="evenodd" />
+              </svg>
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 id="password"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`grow p-2 rounded w-full  text-white ${error ? 'border-red-500' : 'border-gray-300'}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="Password"
               />
               {password && (
                 <span
@@ -89,21 +94,28 @@ function ResetPassword() {
                   {isPasswordVisible ? <IoEyeOff className='text-black' /> : <IoEye className='text-black' />}
                 </span>
               )}
-            </div>
+            </label>
           </div>
 
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-white mb-2">
-              Confirm your new password
-            </label>
-            <div className="relative">
+            <label htmlFor="confirmPassword" className="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70">
+                <path
+                  fillRule="evenodd"
+                  d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                  clipRule="evenodd" />
+              </svg>
               <input
                 type={isConfirmPasswordVisible ? "text" : "password"}
                 id="confirmPassword"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${error ? 'border-red-500' : 'border-gray-300'}`}
+                className={`grow p-2  rounded w-full text-white ${error ? 'border-red-500' : 'border-gray-300'}`}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm your password"
+                placeholder="Confirm password"
               />
               {confirmPassword && (
                 <span
@@ -113,17 +125,18 @@ function ResetPassword() {
                   {isConfirmPasswordVisible ? <IoEyeOff className='text-black' /> : <IoEye className='text-black' />}
                 </span>
               )}
-            </div>
+            </label>
           </div>
 
           {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
 
           <button
-            type="submit"
-            className="w-full mt-4 bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 focus:outline-none"
-          >
-            Reset Password
-          </button>
+              disabled={isResetSuccess || isResetFailed}
+              type="submit"
+              className="btn btn-primary text-white w-full my-4 disabled:bg-disabled-bg disabled:text-black disabled:cursor-not-allowed"
+            >
+              Reset Password
+            </button>
         </form>
 
         {isResetSuccess && (

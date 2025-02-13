@@ -88,11 +88,11 @@ const Shop = () => {
                   type="checkbox"
                   id={`category-${c._id}`}
                   onChange={(e) => handleCheck(e.target.checked, c._id)}
-                  className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500"
+                  className="checkbox checkbox-primary text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500"
                 />
                 <label
                   htmlFor={`category-${c._id}`}
-                  className="ml-2 text-white text-sm"
+                  className="ml-2 text-white text-sm label cursor-pointer"
                 >
                   {c.name}
                 </label>
@@ -109,7 +109,7 @@ const Shop = () => {
                   id={brand}
                   name="brand"
                   onChange={() => handleBrandClick(brand)}
-                  className="w-4 h-4 text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500"
+                  className="radio radio-primary text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500"
                 />
                 <label
                   htmlFor={brand}
@@ -127,11 +127,11 @@ const Shop = () => {
             placeholder="Enter Price"
             value={priceFilter}
             onChange={handlePriceChange}
-            className="w-full px-4 py-2 bg-gray-800 text-white placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+            className="w-full input input-bordered input-primary px-4 py-2 text-white  rounded-lg "
           />
 
           <button
-            className="w-full mt-6 py-2 bg-red-600 text-white rounded-lg"
+            className="w-full mt-6 py-2 btn btn-error text-white rounded-lg"
             onClick={() => window.location.reload()}
           >
             Reset Filters

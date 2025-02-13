@@ -47,7 +47,7 @@ const PlaceOrder = () => {
           <Message>Your cart is empty</Message>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full border border-gray-700 bg-gray-900 rounded-lg text-white">
+            <table className="w-full table border border-gray-700 bg-gray-900 rounded-lg text-white">
               <thead>
                 <tr className="bg-gray-800 text-left uppercase">
                   <th className="px-4 py-3"></th>
@@ -124,7 +124,7 @@ const PlaceOrder = () => {
 
           <button
             type="button"
-            className="w-full bg-gradient-to-r from-pink-500 to-pink-700 text-white py-3 mt-6 rounded-lg text-lg hover:cursor-pointer font-semibold shadow-md hover:from-pink-600 hover:to-pink-800 transition-all"
+            className="w-full btn bg-gradient-to-r from-pink-500 to-pink-700 text-white py-3 mt-6 rounded-lg text-lg hover:cursor-pointer font-semibold shadow-md hover:from-pink-600 hover:to-pink-800 transition-all"
             disabled={cart.cartItems.length === 0}
             onClick={placeOrderHandler}
           >

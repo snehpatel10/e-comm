@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress, savePaymentMethod } from '../../redux/features/cart/carSlice';
@@ -12,20 +11,56 @@ const Shipping = () => {
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const [address, setAddress] = useState(shippingAddress.address || "");
   const [city, setCity] = useState(shippingAddress.city || "");
-  const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ""
-  );
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || "");
   const [country, setCountry] = useState(shippingAddress.country || "");
 
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Custom validation function
+  const validateForm = () => {
+    const errors = {};
+    
+    // Address validation
+    if (!address.trim()) {
+      errors.address = "Address is required";
+    }
+
+    // City validation
+    if (!city.trim()) {
+      errors.city = "City is required";
+    }
+
+    // Postal Code validation (simple validation, adjust as necessary)
+    if (!postalCode.trim()) {
+      errors.postalCode = "Postal code is required";
+    } else if (!/^\d+$/.test(postalCode)) {
+      errors.postalCode = "Postal code must be numeric";
+    }
+
+    // Country validation
+    if (!country.trim()) {
+      errors.country = "Country is required";
+    }
+
+    // If there are errors, return them, else return true (form is valid)
+    return Object.keys(errors).length === 0 ? true : errors;
+  };
+
+  // Handle form submission
   const submitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(saveShippingAddress({ address, city, postalCode, country }));
-    dispatch(savePaymentMethod(paymentMethod));
-    navigate("/placeorder");
+    // Validate form
+    const validation = validateForm();
+    if (validation === true) {
+      dispatch(saveShippingAddress({ address, city, postalCode, country }));
+      dispatch(savePaymentMethod(paymentMethod));
+      navigate("/placeorder");
+    } else {
+      setErrors(validation); // Set validation errors
+    }
   };
 
   // Payment
@@ -45,45 +80,45 @@ const Shipping = () => {
             <label className="block text-white mb-2">Address</label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border input text-black bg-white rounded"
               placeholder="Enter address"
               value={address}
-              required
               onChange={(e) => setAddress(e.target.value)}
             />
+            {errors.address && <span className="text-red-500 text-sm">{errors.address}</span>}
           </div>
           <div className="mb-4">
             <label className="block text-white mb-2">City</label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border input text-black bg-white rounded"
               placeholder="Enter city"
               value={city}
-              required
               onChange={(e) => setCity(e.target.value)}
             />
+            {errors.city && <span className="text-red-500 text-sm">{errors.city}</span>}
           </div>
           <div className="mb-4">
             <label className="block text-white mb-2">Postal Code</label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border input text-black bg-white rounded"
               placeholder="Enter postal code"
               value={postalCode}
-              required
               onChange={(e) => setPostalCode(e.target.value)}
             />
+            {errors.postalCode && <span className="text-red-500 text-sm">{errors.postalCode}</span>}
           </div>
           <div className="mb-4">
             <label className="block text-white mb-2">Country</label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border input text-black bg-white rounded"
               placeholder="Enter country"
               value={country}
-              required
               onChange={(e) => setCountry(e.target.value)}
             />
+            {errors.country && <span className="text-red-500 text-sm">{errors.country}</span>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-400">Select Method</label>
@@ -91,7 +126,7 @@ const Shipping = () => {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  className="form-radio text-pink-500"
+                  className="radio radio-info text-pink-500"
                   name="paymentMethod"
                   value="PayPal"
                   checked={paymentMethod === "PayPal"}
@@ -104,7 +139,7 @@ const Shipping = () => {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  className="form-radio text-pink-500"
+                  className="radio radio-info text-pink-500"
                   name="paymentMethod"
                   value="POD"
                   checked={paymentMethod === "POD"}
@@ -116,7 +151,7 @@ const Shipping = () => {
           </div>
 
           <button
-            className="bg-pink-500 text-white py-2 px-4 rounded-full text-lg w-full"
+            className="bg-pink-500 btn text-white hover:bg-pink-600 py-2 px-4 rounded-full text-lg w-full"
             type="submit"
           >
             Continue

@@ -25,7 +25,7 @@ function Home() {
             <h1 className="ml-32 text-3xl">Special Products</h1>
             <Link
               to="/shop"
-              className="bg-pink-600 font-bold rounded-full py-2 px-10 mr-32"
+              className="bg-pink-600 btn hover:bg-pink-700 font-bold rounded-full py-2 px-10 mr-32"
             >
               Shop
             </Link>

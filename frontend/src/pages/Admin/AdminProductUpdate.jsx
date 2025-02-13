@@ -45,6 +45,14 @@ const AdminProductUpdate = () => {
     }
   }, [productData]);
 
+  useEffect(() => {
+    document.body.style.overflowX = "hidden";
+    return () => {
+      document.body.style.overflowX = "auto";
+    };
+  }, []);
+  
+
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
@@ -136,11 +144,11 @@ const AdminProductUpdate = () => {
   };
 
   return (
-    <div className="container xl:mx-[9rem] sm:mx-[0]">
+    <div className="container xl:ml-[10rem] sm:ml-[0]">
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Update / Delete Product</div>
+          <div className="h-12 text-xl">Update / Delete Product</div>
 
           {image && (
             <div className="text-center">
@@ -153,14 +161,14 @@ const AdminProductUpdate = () => {
           )}
 
           <div className="mb-3">
-            <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+            <label className=" text-white px-4 block w-full text-center rounded-lg font-bold py-11">
               {image ? image.name : "Upload Image"}
               <input
                 type="file"
                 name="image"
                 accept="image/*"
                 onChange={uploadFileHandler}
-                className="hidden"
+                className="file-input file-input-bordered text-white"
               />
             </label>
           </div>
@@ -172,7 +180,7 @@ const AdminProductUpdate = () => {
                 <label htmlFor="name" className="text-white">Name</label>
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-3 w-full border rounded-lg input input-bordered text-white"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -182,7 +190,7 @@ const AdminProductUpdate = () => {
                 <label htmlFor="price" className="text-white">Price</label>
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-3 w-full border rounded-lg input input-bordered text-white"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -196,7 +204,7 @@ const AdminProductUpdate = () => {
                 <label htmlFor="quantity" className="text-white">Quantity</label>
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-3 w-full border rounded-lg input input-bordered text-white"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
@@ -206,7 +214,7 @@ const AdminProductUpdate = () => {
                 <label htmlFor="brand" className="text-white">Brand</label>
                 <input
                   type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-3 w-full border rounded-lg input input-bordered text-white"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
@@ -215,7 +223,7 @@ const AdminProductUpdate = () => {
 
             <label htmlFor="" className="my-5">Description</label>
             <textarea
-              className="p-2 mb-3 bg-[#101011] border rounded-lg w-full text-white"
+              className="p-2 mb-3 textarea textarea-bordered border rounded-lg w-full text-white"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -225,8 +233,8 @@ const AdminProductUpdate = () => {
               <div className="w-[48%]">
                 <label htmlFor="stock" className="text-white">Purchase limit</label>
                 <input
-                  type="text"
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  type="number"
+                  className="p-4 mb-3 w-full border rounded-lg input input-bordered text-white"
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
@@ -235,7 +243,7 @@ const AdminProductUpdate = () => {
               <div className="w-[48%]">
                 <label htmlFor="category" className="text-white">Category</label>
                 <select
-                  className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
+                  className=" mb-3 w-full border rounded-lg select select-bordered text-white"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
@@ -252,13 +260,13 @@ const AdminProductUpdate = () => {
             <div className="mt-5 flex justify-between">
               <button
                 onClick={handleSubmit}
-                className="py-4 px-10 rounded-lg text-lg font-bold bg-green-600"
+                className=" rounded-lg btn btn-success text-lg font-bold "
               >
                 Update
               </button>
               <button
                 onClick={handleDelete}
-                className="py-4 px-10 rounded-lg text-lg font-bold bg-pink-600"
+                className=" btn btn-primary rounded-lg text-lg font-bold text-white"
               >
                 Delete
               </button>

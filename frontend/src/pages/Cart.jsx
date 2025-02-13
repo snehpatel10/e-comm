@@ -57,7 +57,7 @@ const Cart = () => {
 
                   <div className="w-24">
                     <select
-                      className="w-full p-1 border rounded text-black"
+                      className="w-full select select-primary p-1 border rounded text-white"
                       value={item.qty}
                       onChange={(e) =>
                         addToCartHandler(item, Number(e.target.value))
@@ -96,7 +96,7 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className="bg-pink-500 mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="btn btn-primary text-white mt-4 py-2 px-4 rounded-full text-lg w-full"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >

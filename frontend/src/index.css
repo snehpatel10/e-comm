@@ -8,7 +8,15 @@ body {
   font-family: 'Quicksand', sans-serif;
 }
 
-/* Add this to your global CSS (like index.css or App.css) */
+/* Override autofill styling */
+input:-webkit-autofill {
+  background-color: #121212 !important;  /* Match your page's background */
+  color: white !important;  /* Ensure text is visible */
+  border-color: #4B5563 !important;  /* Use the same border color when autofilled */
+  box-shadow: none !important;  /* Remove the box shadow from autofill */
+}
+
+
 @keyframes toast-pop {
   0% {
     transform: scale(0.8);

@@ -33,7 +33,7 @@ const ProductCard = ({ p }) => {
   <div className="p-5 flex flex-col flex-grow">
     <div className="flex justify-between">
       <h5 className="mb-2 text-xl text-white">{p?.name}</h5>
-      <p className="text-black font-semibold text-pink-500">
+      <p className="font-semibold text-pink-500">
         {p?.price?.toLocaleString("en-US", { style: "currency", currency: "USD" })}
       </p>
     </div>
@@ -48,7 +48,7 @@ const ProductCard = ({ p }) => {
         </svg>
       </Link>
 
-      <button className="p-2 rounded-full bg-pink-700 hover:bg-pink-800 text-white" onClick={() => addToCartHandler(p, 1)}>
+      <button className="p-2 rounded-full btn btn-secondary text-white" onClick={() => addToCartHandler(p, 1)}>
         <AiOutlineShoppingCart size={25} />
       </button>
     </section>

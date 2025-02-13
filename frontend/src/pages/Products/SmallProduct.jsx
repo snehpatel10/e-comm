@@ -4,7 +4,7 @@ import HeartIcon from "./HeartIcon";
 
 function SmallProduct({ product }) {
   return (
-    <div className="w-[15rem] ml-[3rem] p-2">
+    <div className="w-[15rem] p-2">
       <div className="relative">
         <img
           src={product.image}

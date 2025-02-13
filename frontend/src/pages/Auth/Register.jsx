@@ -67,7 +67,7 @@ function Register() {
       const res = await register({ username, email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
-      toast.success('User successfully registered');
+      toast.success("User successfully registered");
     } catch (error) {
       toast.error(error?.data?.message || error.message);
     }
@@ -87,105 +87,91 @@ function Register() {
 
         {/* Right Side: Form */}
         <div className="w-full lg:w-1/2 p-8">
-          <h1 className="text-2xl font-semibold mb-4 text-white">Create an account</h1>
+          <h1 className="text-2xl font-semibold mb-8 text-white">Create an account</h1>
           <form onSubmit={submitHandler} className="w-full max-w-md mx-auto">
-            <div className="my-4">
-              <label htmlFor="name" className="block text-sm font-medium text-white">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.username ? 'border-red-500' : 'border-gray-600'}`}
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              {errors.username && <div className="text-red-500 text-sm">{errors.username}</div>}
-            </div>
 
-            <div className="my-4">
-              <label htmlFor="email" className="block text-sm font-medium text-white">
-                Email
-              </label>
-              <input
-                type="text"
-                id="email"
-                className={`mt-1 p-2 border rounded w-full bg-[#2c2c2c] text-white ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
-                value={email}
-                onChange={(e) => setEmail(e.target.value.toLowerCase())}
-              />
-              {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
-            </div>
-
-            <div className="my-4">
-              <label htmlFor="password" className="block text-sm font-medium text-white">
-                Password
-              </label>
-              <div className="relative">
+            <div className="mb-6">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                </svg>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  className={`mt-1 p-2 pl-3 pr-10 border rounded w-full bg-[#2c2c2c] text-white ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
+                  type="text"
+                  className={`grow p-3 bg-[#2c2c2c] text-white focus:outline-none transition-all ${errors.username ? 'border-red-500' : 'border-gray-600'}`}
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </label>
+              {errors.username && <div className="text-red-500 text-sm mt-1">{errors.username}</div>}
+            </div>
+
+            <div className="mb-6">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                  <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                  <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                </svg>
+                <input
+                  type="text"
+                  className={`grow p-3 bg-[#2c2c2c] text-white focus:outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-600'}`}
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                />
+              </label>
+              {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
+            </div>
+
+            <div className="mb-6">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                  <path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" />
+                </svg>
+                <input
+                  type="password"
+                  className={`grow p-3 bg-[#2c2c2c] text-white focus:outline-none transition-all ${errors.password ? 'border-red-500' : 'border-gray-600'}`}
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {password && (
-                  <div
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <IoEyeOff size={20} color="#fff" /> : <IoEye size={20} color="#fff" />}
-                  </div>
-                )}
-              </div>
-              {errors.password && <div className="text-red-500 text-sm">{errors.password}</div>}
+              </label>
+              
+              {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
             </div>
 
-            <div className="my-4">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
-                Confirm Password
-              </label>
-              <div className="relative">
+            <div className="mb-7">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                  <path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" />
+                </svg>
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  id="confirmPassword"
-                  className={`mt-1 p-2 pl-3 pr-10 border rounded w-full bg-[#2c2c2c] text-white ${errors.confirmPassword ? 'border-red-500' : 'border-gray-600'}`}
+                  type="password"
+                  className={`grow p-3 bg-[#2c2c2c] text-white focus:outline-none transition-all ${errors.confirmPassword ? 'border-red-500' : 'border-gray-600'}`}
+                  placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {confirmPassword && (
-                  <div
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? <IoEyeOff size={20} color="#fff" /> : <IoEye size={20} color="#fff" />}
-                  </div>
-                )}
-              </div>
-              {errors.confirmPassword && <div className="text-red-500 text-sm">{errors.confirmPassword}</div>}
+              </label>
+              
+              {errors.confirmPassword && <div className="text-red-500 text-sm mt-1">{errors.confirmPassword}</div>}
             </div>
 
-            <div className="mt-4 text-center">
-              <button
-                disabled={isLoading}
-                type="submit"
-                className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-4 w-full hover:bg-pink-600"
-              >
-                {isLoading ? "Registering..." : "Register"}
-              </button>
-              {isLoading && <Loader />}
-            </div>
-          </form>
-
-          <div className="mt-2 text-center">
-            <span className="text-white">Already have an account? </span>
-            <Link
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-pink-500 hover:underline"
+            <button
+              type="submit"
+              className="w-full btn btn-primary mb-2 p-3 text-white"
+              disabled={isLoading}
             >
-              Login
-            </Link>
-          </div>
+              {isLoading ? <Loader /> : "Sign Up"}
+            </button>
+
+            <p className="text-center text-gray-400 mt-4">
+              Already have an account?{" "}
+              <Link to={`/login?redirect=${redirect}`} className="text-pink-500 hover:underline">
+                Sign In
+              </Link>
+            </p>
+          </form>
         </div>
       </section>
     </div>
