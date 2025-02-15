@@ -34,7 +34,7 @@ const ProductCarousel = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="mx-auto max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="ml-0 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
           <Slider {...settings} className="rounded-lg">
             {products.map(
               ({

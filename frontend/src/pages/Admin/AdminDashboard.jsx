@@ -114,12 +114,13 @@ const AdminDashboard = () => {
       <AdminMenu />
 
       <section className="flex justify-center items-center flex-col">
-        <div className="w-full flex justify-around flex-wrap xl:ml-[4rem] md:ml-[0rem]">
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+        {/* Wrap the stats cards in a flex container with responsive classes */}
+        <div className="w-full flex justify-center md:justify-around flex-wrap xl:ml-[4rem] md:ml-[0rem] space-y-4 md:space-y-0">
+          {/* Sales Card */}
+          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaDollarSign size={20} color="#fff" />
             </div>
-
             <p className="mt-5">Sales</p>
             <h1 className="text-xl font-bold">
               ${" "}
@@ -132,21 +133,23 @@ const AdminDashboard = () => {
               )}
             </h1>
           </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+
+          {/* Customers Card */}
+          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaUsers size={20} color="#fff" />
             </div>
-
             <p className="mt-5">Customers</p>
             <h1 className="text-xl font-bold">
               {isLoading ? <Loader /> : customers?.length}
             </h1>
           </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
+
+          {/* Orders Card */}
+          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaShoppingCart size={20} color="#fff" />
             </div>
-
             <p className="mt-5">All Orders</p>
             <h1 className="text-xl font-bold">
               {isLoading ? <Loader /> : orders?.totalOrders}
@@ -154,6 +157,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Sales Chart Section */}
         <div className="mt-[4rem] w-full xl:w-[75%] lg:w-[80%] md:w-[85%]">
           <Chart
             options={state.options}
@@ -163,6 +167,7 @@ const AdminDashboard = () => {
           />
         </div>
 
+        {/* Order List Section */}
         <div className="mt-[4rem] w-full flex justify-center">
           <OrderList />
         </div>

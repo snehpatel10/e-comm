@@ -16,9 +16,9 @@ function Header() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-start gap-6 p-4">
+    <div className="flex flex-col lg:flex-row justify-between items-start gap-3 p-4">
       {/* Product List */}
-      <div className="w-full ml-[3rem] lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <div className="w-[23vh] ml-[3rem] lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-2">
         {data.map((product) => (
           <SmallProduct key={product._id} product={product} />
         ))}

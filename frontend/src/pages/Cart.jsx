@@ -57,7 +57,7 @@ const Cart = () => {
 
                   <div className="w-24">
                     <select
-                      className="w-full select select-primary p-1 border rounded text-white"
+                      className="w-full select select-primary p-3 border rounded text-white"
                       value={item.qty}
                       onChange={(e) =>
                         addToCartHandler(item, Number(e.target.value))

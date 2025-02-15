@@ -1,3 +1,4 @@
+/* Tailwind Base, Components, and Utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,15 +9,44 @@ body {
   font-family: 'Quicksand', sans-serif;
 }
 
-/* Override autofill styling */
-input:-webkit-autofill {
-  background-color: #121212 !important;  /* Match your page's background */
-  color: white !important;  /* Ensure text is visible */
-  border-color: #4B5563 !important;  /* Use the same border color when autofilled */
-  box-shadow: none !important;  /* Remove the box shadow from autofill */
+html, body {
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Darker track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333; /* Darker thumb */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444; /* Slightly lighter thumb on hover */
+}
+
+/* Firefox scrollbar styling */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1a1a1a;
+}
+
+/* Override autofill styling */
+input:-webkit-autofill {
+  background-color: #121212 !important;
+  color: white !important;
+  border-color: #4B5563 !important;
+  box-shadow: none !important;
+}
+
+/* Toast animation */
 @keyframes toast-pop {
   0% {
     transform: scale(0.8);
@@ -34,26 +64,6 @@ input:-webkit-autofill {
 
 .toast-pop {
   animation: toast-pop 0.5s ease-out;
-}
-
-
-/* More intense dark themed scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1a; /* Darker track */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333; /* Darker thumb */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #444; /* Slightly lighter thumb on hover */
 }
 
 input,

@@ -30,9 +30,9 @@ const OrderList = () => {
             <AdminMenu />
           </div>
 
-          <div className="overflow-x-auto mt-10">
+          <div className="overflow-x-auto mt-4">
             <table className="min-w-full table text-gray-300">
-              <thead className="border-b border-gray-700">
+              <thead className="border-b border-gray-700 text-base sticky top-0 bg-gray-900">
                 <tr>
                   <th className="px-6 py-3 text-left">Order ID</th>
                   <th className="px-6 py-3 text-left">Items</th>
