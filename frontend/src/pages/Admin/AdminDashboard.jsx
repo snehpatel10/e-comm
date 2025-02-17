@@ -174,7 +174,7 @@ const AdminDashboard = () => {
           <Chart
             options={state.options}
             series={state.series}
-            type="bar"
+            type="line"
             width="100%"
           />
         </div>

@@ -37,6 +37,7 @@ const ProductDetails = () => {
     refetch,
     error,
   } = useGetProductDetailsQuery(productId);
+  console.log(product)
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -121,6 +122,10 @@ const ProductDetails = () => {
                 <h1 className="flex items-center mb-6">
                   <FaStar className="mr-2 text-white" /> Ratings: {product.rating}
                 </h1>
+                <h1 className="flex items-center mb-6 w-[10rem]">
+                  <FaBox className="mr-2 text-white" />
+                  {product.countInStock === 0 ? 'Out of stock' : 'In stock'}
+                </h1>
               </div>
             </div>
 
@@ -158,6 +163,8 @@ const ProductDetails = () => {
               </button>
 
             </div>
+            <div className="text-red-500 mt-4 font-bold">{product.quantity < 4 ? 'Hurry up! Only a few products left' : null}</div>
+
           </div>
 
           <div className="mt-[5rem] container flex flex-wrap items-start justify-between">

@@ -316,13 +316,11 @@ export const markOrderAsPaid = asyncHandler(async (req, res) => {
         email_address: req.body.payer.email_address,
       };
 
-      // Calculate the expected delivery date (3 days after the payment date)
       const expectedDeliveryDate = moment(order.paidAt).add(3, 'days').format('MMMM Do YYYY');
 
       // Generate invoice for the order
       const invoicePDF = await generateInvoice(order);
 
-      // Prepare the email content for the user
       const subject = `Payment Successful for Order #${order._id}`;
       const text = `Dear ${req.user.username},\n\nYour payment for Order #${order._id} was successful. The expected delivery date for your order is ${expectedDeliveryDate}.\n\nThank you for shopping with us!`;
       const html = `
@@ -462,7 +460,7 @@ export const markOrderAsDelivered = asyncHandler(async (req, res) => {
 
 export const markOrderAsPaidPOD = asyncHandler(async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user', 'username email');
 
     if (order) {
       order.isPaid = true;
@@ -474,13 +472,10 @@ export const markOrderAsPaidPOD = asyncHandler(async (req, res) => {
         email_address: req.body.email_address,
       };
 
-      // Calculate the expected delivery date (3 days after the payment date)
       const expectedDeliveryDate = moment(order.paidAt).add(3, 'days').format('MMMM Do YYYY');
 
-      // Save the updated order in the database
-      const updatedOrder = await order.save();
+      const invoicePDF = await generateInvoice(order);
 
-      // Prepare the email content
       const subject = `Payment Successful for Order #${order._id}`;
       const text = `Dear ${req.user.username},\n\nYour payment for Order #${order._id} was successful. The expected delivery date for your order is ${expectedDeliveryDate}.\n\nThank you for shopping with us!`;
       const html = `
@@ -574,9 +569,10 @@ export const markOrderAsPaidPOD = asyncHandler(async (req, res) => {
       `;
 
       // Send the email to the user
-      await sendEmail(req.user.email, subject, text, html);
+      await sendEmail(req.user.email, subject, text, html, invoicePDF, "Invoice.pdf");
 
-      // Return the updated order response to the client
+      const updatedOrder = await order.save();
+
       res.status(200).json(updatedOrder);
     } else {
       res.status(404);
