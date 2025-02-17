@@ -13,6 +13,9 @@ export default {
         julius: ['"Julius Sans One"', "sans-serif"],
         quicksand: ["Quicksand", "sans-serif"],
       },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
+      },
     },
   },
   daisyui: {

@@ -22,8 +22,20 @@ const AdminDashboard = () => {
     options: {
       chart: {
         type: "bar",
-        fontFamily: "Quicksand, sans-serif", // Set font family to "Quicksand"
-        foreColor: "#fff", // Set font color to white for chart
+        fontFamily: "Quicksand, sans-serif", 
+        foreColor: "#fff", 
+        animations: {
+          enabled: true,
+          speed: 800,
+          animateGradually: {
+              enabled: true,
+              delay: 150
+          },
+          dynamicAnimation: {
+              enabled: true,
+              speed: 350
+          }
+      }
       },
       tooltip: {
         theme: "dark",
@@ -40,7 +52,7 @@ const AdminDashboard = () => {
         text: "Sales Trend",
         align: "left",
         style: {
-          color: "#fff", // Set title color to white
+          color: "#fff", 
         },
       },
       grid: {
@@ -54,7 +66,7 @@ const AdminDashboard = () => {
         title: {
           text: "Date",
           style: {
-            color: "#fff", // Set x-axis label color to white
+            color: "#fff", 
           },
         },
       },
@@ -62,14 +74,14 @@ const AdminDashboard = () => {
         title: {
           text: "Sales",
           style: {
-            color: "#fff", // Set y-axis label color to white
+            color: "#fff", 
           },
         },
         min: 0,
         labels: {
           formatter: (value) => parseFloat(value).toFixed(2),
           style: {
-            color: "#fff", // Set y-axis label color to white
+            color: "#fff", 
           },
         },
       },
@@ -80,7 +92,7 @@ const AdminDashboard = () => {
         offsetY: -25,
         offsetX: -5,
         labels: {
-          colors: "#fff", // Set legend color to white
+          colors: "#fff",
         },
       },
     },

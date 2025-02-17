@@ -1,22 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
+import { LuRefreshCw } from "react-icons/lu";
 import { useGetOrdersQuery } from "../../redux/api/orderApiSlice";
 import AdminMenu from "./AdminMenu";
 
 const OrderList = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
+  const { data: orders, refetch, isLoading, error } = useGetOrdersQuery();
+  const [refresh, setRefresh] = useState(false)
 
-  // Function to calculate expected delivery date (3 days after paid date)
+  const handleRefresh = () => {
+    setRefresh(true)
+    setTimeout(() => {
+      refetch();
+      setRefresh(false)
+    }, 1000)
+
+  };
+
   const calculateDeliveryDate = (paidDate) => {
     const date = new Date(paidDate);
-    date.setDate(date.getDate() + 3); // Add 3 days to the paid date
-    return date.toISOString().split("T")[0]; // Return in 'YYYY-MM-DD' format
+    date.setDate(date.getDate() + 3);
+    return date.toISOString().split("T")[0];
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      <div className="p-4 flex justify-end mr-[5rem]">
+        <button
+          onClick={handleRefresh}
+          disabled={refresh}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 flex items-center justify-center gap-2"
+        >
+          <LuRefreshCw
+            className={`w-3 h-3 ${refresh ? 'animate-spin-slow' : ''} transition-transform duration-300`}
+          />
+          <span>{refresh ? "Refreshing..." : "Refresh"}</span>
+        </button>
+      </div>
+
       {isLoading ? (
         <Loader />
       ) : error ? (

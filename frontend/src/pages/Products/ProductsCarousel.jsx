@@ -15,6 +15,7 @@ import {
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
+  console.log(products)
 
   const settings = {
     dots: false,
@@ -84,12 +85,8 @@ const ProductCarousel = () => {
                           {Math.round(rating)}
                         </p>
                         <p className="flex items-center text-sm">
-                          <FaShoppingCart className="mr-2 text-gray-500" /> Quantity:{" "}
-                          {quantity}
-                        </p>
-                        <p className="flex items-center text-sm">
-                          <FaBox className="mr-2 text-gray-500" /> In Stock:{" "}
-                          {countInStock}
+                          <FaBox className="mr-2 text-gray-500" /> 
+                          {countInStock>0 ? 'In stock' : 'Out of stock'}
                         </p>
                       </div>
                     </div>

@@ -38,8 +38,6 @@ const ProductDetails = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
-  console.log(product)
-
   const { userInfo } = useSelector((state) => state.auth);
 
   const [createReview, { isLoading: loadingProductReview }] =
@@ -154,9 +152,9 @@ const ProductDetails = () => {
               <button
                 onClick={addToCartHandler}
                 disabled={product.countInStock === 0}
-                className={`btn ${product.countInStock === 0 ? 'btn-disabled' : 'btn-primary'} text-white py-2 px-4 rounded-lg mt-4 sm:mt-2`}
+                className={`btn ${product.countInStock === 0 ? 'bg-disabled-bg  ' : 'btn-primary'} text-white py-2 px-4 rounded-lg mt-4 sm:mt-2`}
               >
-                Add To Cart
+                {product.countInStock === 0 ? 'Out of Stock' : 'Add to cart'}
               </button>
 
             </div>
