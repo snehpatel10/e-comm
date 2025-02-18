@@ -200,10 +200,9 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     }
 
     const resetToken = createToken(res, email, "resetToken", "5m");
-    console.log('Reset Token:', resetToken);
 
     const resetPasswordLink = `${process.env.FRONTEND_URL}/reset-password/${encodeURIComponent(resetToken)}`;
-    console.log(resetPasswordLink)
+
     const htmlContent = `
       <html>
         <head>

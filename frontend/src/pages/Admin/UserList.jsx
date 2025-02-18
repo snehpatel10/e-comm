@@ -72,7 +72,7 @@ function UserList() {
   return (
     <div className="flex">
       {/* Admin Menu */}
-      <div className="fixed top-0 left-0 h-full w-[1px]  z-20"> 
+      <div className="fixed top-0 left-0 h-full w-[1px]  z-20">
         <AdminMenu />
       </div>
 
@@ -182,26 +182,31 @@ function UserList() {
 
             {/* Modal content */}
             {isModalOpen && (
-              <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
-                <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full">
-                  <h3 className="text-xl font-semibold mb-6 text-white">Are you sure you want to delete this user?</h3>
-                  <div className="flex justify-between">
-                    <button
-                      onClick={deleteHandler}
-                      className="btn btn-error text-white px-6 py-3 rounded-lg "
-                    >
-                      Yes, delete
-                    </button>
-                    <button
-                      onClick={closeModal}
-                      className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700"
-                    >
-                      Cancel
-                    </button>
+              <div className="fixed inset-0 flex justify-center items-center z-50  bg-opacity-50">
+                <div className="modal modal-open">
+                  <div className="modal-box bg-[#434343] p-8 rounded-lg shadow-lg max-w-sm w-full">
+                    <h3 className="text-lg mb-6 text-white">Are you sure you want to delete this user?</h3>
+                    <div className="flex justify-end space-x-4">
+                      {/* Yes, Delete Button */}
+                      <button
+                        onClick={deleteHandler}
+                        className="btn btn-error text-white px-6 py-3 rounded-lg"
+                      >
+                        Yes, delete
+                      </button>
+                      {/* Cancel Button */}
+                      <button
+                        onClick={closeModal}
+                        className="btn bg-gray-800 border-none text-white px-6 py-3 rounded-lg hover:bg-gray-700"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
+
           </div>
         )}
       </div>

@@ -19,7 +19,7 @@ export const createCategory = asyncHandler(async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(500).json(error);
   }
 });
 
@@ -31,7 +31,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
     const category = await Category.findOne({ _id: categoryId });
 
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(500).json({ error: "Category not found" });
     }
 
     category.name = name;

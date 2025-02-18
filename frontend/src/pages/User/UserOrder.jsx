@@ -73,7 +73,7 @@ const UserOrder = () => {
                       <div>
                         <p className="text-white font-semibold">{item.name}</p>
                         <p className="text-sm text-gray-400">
-                          Qty: {item.qty} | Price: ₹{item.price}
+                          Qty: {item.qty} | Price: $ {item.price}
                         </p>
                       </div>
                     </div>
@@ -92,7 +92,7 @@ const UserOrder = () => {
                     </p>
                   )}
                   <p className="text-white">
-                    <strong>Total:</strong> ₹{order.totalPrice}
+                    <strong>Total:</strong> $ {order.totalPrice}
                   </p>
                 </div>
               </div>

@@ -113,7 +113,7 @@ const OrderList = () => {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      {order.isPaid && !order.isDelivered
+                    {order.paymentMethod === "POD" && order.isPaid && !order.isDelivered
                         ? calculateDeliveryDate(order.paidAt)
                         : "N/A"}
                     </td>

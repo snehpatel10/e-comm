@@ -232,7 +232,7 @@ const ProductList = () => {
 
             <button
               onClick={handleSubmit}
-              className=" mt-5 rounded-lg text-lg font-bold btn btn-primary"
+              className=" mt-5 rounded-lg text-lg font-bold btn btn-primary text-white"
             >
               Submit
             </button>

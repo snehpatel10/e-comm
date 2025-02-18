@@ -23,9 +23,10 @@ const AdminProductUpdate = () => {
   const [quantity, setQuantity] = useState(productData?.quantity || "");
   const [brand, setBrand] = useState(productData?.brand || "");
   const [stock, setStock] = useState(productData?.countInStock);
-  
+
   const [errors, setErrors] = useState({});
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);  // Modal visibility state
+
   const navigate = useNavigate();
   const { data: categories = [] } = useFetchCategoriesQuery();
   const [uploadProductImage] = useUploadProductImageMutation();
@@ -51,7 +52,7 @@ const AdminProductUpdate = () => {
       document.body.style.overflowX = "auto";
     };
   }, []);
-  
+
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
@@ -132,9 +133,6 @@ const AdminProductUpdate = () => {
 
   const handleDelete = async () => {
     try {
-      let answer = window.confirm("Are you sure you want to delete this product?");
-      if (!answer) return;
-
       const { data } = await deleteProduct(params._id);
       toast.success(`"${data.name}" deleted successfully`);
       navigate("/admin/allproductslist");
@@ -265,13 +263,40 @@ const AdminProductUpdate = () => {
                 Update
               </button>
               <button
-                onClick={handleDelete}
+                onClick={() => setIsModalOpen(true)}  // Open modal on click
                 className=" btn btn-primary rounded-lg text-lg font-bold text-white"
               >
                 Delete
               </button>
             </div>
           </div>
+
+          {isModalOpen && (
+            <div className="fixed inset-0 flex justify-center items-center z-50 x bg-opacity-50">
+              <div className="modal modal-open">
+                <div className="modal-box bg-[#434343] text-white p-6 rounded-lg">
+                  <h2 className="text-lg">Are you sure you want to delete this product?</h2>
+                  <div className="flex justify-end space-x-4 mt-4">
+                    <button
+                      className="btn btn-secondary border-none text-sm text-white px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors"
+                      onClick={() => setIsModalOpen(false)}  // Close modal
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="btn btn-danger border-none text-sm text-white px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors"
+                      onClick={() => {
+                        handleDelete();
+                        setIsModalOpen(false);  // Close modal after deletion
+                      }}
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
