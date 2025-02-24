@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetFilteredProductsQuery } from "../redux/api/productApiSlice";
@@ -8,6 +9,8 @@ import {
   setChecked,
 } from "../redux/features/shop/shopSlice";
 import Loader from "../components/Loader";
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 import ProductCard from "./Products/ProductCard";
 
 const Shop = () => {
@@ -23,6 +26,18 @@ const Shop = () => {
     checked,
     radio,
   });
+
+  const [hasScrolled, setHasScrolled] = useState(false); // Track scroll state
+
+  useEffect(() => {
+    setTimeout(() => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease-in-out",
+        once: true,
+      });
+    }, 300); 
+  }, []);
 
   useEffect(() => {
     if (!categoriesQuery.isLoading) {
@@ -77,10 +92,17 @@ const Shop = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-12">
-      <div className="flex flex-col md:flex-row  min-h-screen ml-[1.5rem]">
+      <div className="flex flex-col md:flex-row min-h-screen ml-[1.5rem]">
         {/* Filter Section */}
-        <div className="bg-[#151515] p-5 rounded-lg shadow-lg w-full md:w-1/4 mb-6 md:mb-0">
-          <h2 className="text-center text-white py-2 mb-4 bg-black rounded-full">Filter by Categories</h2>
+        <motion.div
+          className="bg-[#151515] p-5 rounded-lg shadow-lg w-full md:w-1/4 mb-6 md:mb-0"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-center text-white py-2 mb-4 bg-black rounded-full">
+            Filter by Categories
+          </h2>
           <div className="space-y-4">
             {categories?.map((c) => (
               <div key={c._id} className="flex items-center">
@@ -100,7 +122,9 @@ const Shop = () => {
             ))}
           </div>
 
-          <h2 className="text-center text-white py-2 mt-6 mb-4 bg-black rounded-full">Filter by Brands</h2>
+          <h2 className="text-center text-white py-2 mt-6 mb-4 bg-black rounded-full">
+            Filter by Brands
+          </h2>
           <div className="space-y-4">
             {uniqueBrands?.map((brand) => (
               <div key={brand} className="flex items-center">
@@ -111,17 +135,16 @@ const Shop = () => {
                   onChange={() => handleBrandClick(brand)}
                   className="radio radio-primary text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500"
                 />
-                <label
-                  htmlFor={brand}
-                  className="ml-2 text-white text-sm"
-                >
+                <label htmlFor={brand} className="ml-2 text-white text-sm">
                   {brand}
                 </label>
               </div>
             ))}
           </div>
 
-          <h2 className="text-center text-white py-2 mt-6 mb-4 bg-black rounded-full">Filter by Price</h2>
+          <h2 className="text-center text-white py-2 mt-6 mb-4 bg-black rounded-full">
+            Filter by Price
+          </h2>
           <input
             type="text"
             placeholder="Enter Price"
@@ -136,24 +159,40 @@ const Shop = () => {
           >
             Reset Filters
           </button>
-        </div>
+        </motion.div>
 
         {/* Product Section */}
         <div className="flex-1 p-5">
           <h2 className="text-left text-white text-xl font-extralight mb-6">
             {products?.length} Products
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
             {products.length === 0 ? (
               <Loader />
             ) : (
               products?.map((p) => (
-                <div key={p._id} className="flex justify-center">
-                  <ProductCard p={p} />
-                </div>
+                <motion.div
+                  key={p._id}
+                  className="flex justify-center"
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 25,
+                    delay: 0.2,
+                  }}
+                >
+                  <ProductCard p={p} hasScrolled={hasScrolled} />
+                </motion.div>
               ))
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

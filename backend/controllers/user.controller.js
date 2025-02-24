@@ -339,3 +339,32 @@ export const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
+export const deleteAccount = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Cannot delete admin user");
+    }
+
+    await User.deleteOne({ _id: user._id });
+
+    res.clearCookie('jwt');
+
+    res.status(200).json({
+      message: "User account successfully removed",
+    });
+  } catch (error) {
+    console.error("Error during account deletion:", error);
+    res.status(500).json({
+      message: "An error occurred while deleting the account",
+      error: error.message || "Unknown error",
+    });
+  }
+});

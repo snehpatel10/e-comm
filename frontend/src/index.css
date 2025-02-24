@@ -9,42 +9,36 @@ body {
   font-family: 'Quicksand', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a !important; /* Darker track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333 !important; /* Darker thumb */
+  border-radius: 4px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444 !important; /* Slightly lighter thumb on hover */
+}
+
+
 html, body {
   height: 100%;
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
 
-::-webkit-scrollbar-track {
-  background: #1a1a1a; /* Darker track */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333; /* Darker thumb */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #444; /* Slightly lighter thumb on hover */
-}
-
-/* Firefox scrollbar styling */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #333 #1a1a1a;
-}
-
-/* Override autofill styling */
-input:-webkit-autofill {
-  background-color: #121212 !important;
-  color: white !important;
-  border-color: #4B5563 !important;
-  box-shadow: none !important;
-}
 
 /* Toast animation */
 @keyframes toast-pop {

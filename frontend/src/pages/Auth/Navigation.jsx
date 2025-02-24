@@ -23,6 +23,7 @@ const Navigation = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState("bottom");
   const [dropdownAlignment, setDropdownAlignment] = useState("right");
+  const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0)
 
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
@@ -65,6 +66,14 @@ const Navigation = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    // Get the unread notification count from localStorage
+    const unreadCount = localStorage.getItem("unreadCount");
+    if (unreadCount) {
+      setUnreadNotificationsCount(parseInt(unreadCount, 10));
+    }
   }, []);
 
   // Close dropdown when sidebar is closed
@@ -167,6 +176,12 @@ const Navigation = () => {
           >
             <MdOutlineNotificationsNone className="mr-2 mt-[3rem]" size={26} />
             <span className="hidden nav-item-name mt-[3rem] uppercase">Notification</span>
+            {<div className="absolute left-2 top-8">{unreadNotificationsCount > 0 && (
+              <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+                {unreadNotificationsCount}
+              </span>
+            )}</div>}
+
           </Link>
         )}
       </div>
@@ -178,7 +193,7 @@ const Navigation = () => {
           className="flex items-center text-gray-800 focus:outline-none"
         >
           {userInfo ? (
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-700 text-white text-base">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-purple-100 text-purple-900 text-base">
               {userInfo.username[0].toUpperCase()} {/* First letter of the username */}
             </span>
           ) : (
@@ -204,59 +219,59 @@ const Navigation = () => {
         </button>
 
         {dropdownOpen && userInfo && (
-  <ul
-    ref={dropdownRef}
-    className={`absolute mt-2 bg-gray-600 text-white  rounded-lg shadow-lg transition-all duration-300 ease-out transform ${dropdownOpen ? "opacity-100" : "opacity-0"} ${dropdownAlignment === "right" ? "right-0" : "left-0"}`}
-    style={{
-      minWidth: "150px",
-      top: dropdownPosition === "bottom" ? "100%" : "auto",
-      bottom: dropdownPosition === "top" ? "100%" : "auto",
-    }}
-  >
-    {/* Admin Links */}
-    {userInfo.isAdmin && (
-      <>
-        <li>
-          <Link to="/admin/dashboard" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-            Dashboard
-          </Link>
-        </li>
-        <li>
-          <Link to="/admin/productlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-            Products
-          </Link>
-        </li>
-        <li>
-          <Link to="/admin/categorylist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-            Category
-          </Link>
-        </li>
-        <li>
-          <Link to="/admin/orderlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-            Orders
-          </Link>
-        </li>
-        <li>
-          <Link to="/admin/userlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-            Users
-          </Link>
-        </li>
-      </>
-    )}
+          <ul
+            ref={dropdownRef}
+            className={`absolute mt-2 bg-gray-600 text-white  rounded-lg shadow-lg transition-all duration-300 ease-out transform ${dropdownOpen ? "opacity-100" : "opacity-0"} ${dropdownAlignment === "right" ? "right-0" : "left-0"}`}
+            style={{
+              minWidth: "150px",
+              top: dropdownPosition === "bottom" ? "100%" : "auto",
+              bottom: dropdownPosition === "top" ? "100%" : "auto",
+            }}
+          >
+            {/* Admin Links */}
+            {userInfo.isAdmin && (
+              <>
+                <li>
+                  <Link to="/admin/dashboard" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/productlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/categorylist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                    Category
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/orderlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                    Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/userlist" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                    Users
+                  </Link>
+                </li>
+              </>
+            )}
 
-    {/* User Links */}
-    <li>
-      <Link to="/profile" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
-        Profile
-      </Link>
-    </li>
-    <li>
-      <Link onClick={logoutHandler} className="block px-4 py-2  rounded-md hover:bg-red-700 hover:text-white transition-all duration-200">
-        Logout
-      </Link>
-    </li>
-  </ul>
-)}
+            {/* User Links */}
+            <li>
+              <Link to="/profile" className="block px-4 py-2 hover:bg-primary hover:text-white rounded-md transition-all duration-200">
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link onClick={logoutHandler} className="block px-4 py-2  rounded-md hover:bg-red-700 hover:text-white transition-all duration-200">
+                Logout
+              </Link>
+            </li>
+          </ul>
+        )}
 
       </div>
 

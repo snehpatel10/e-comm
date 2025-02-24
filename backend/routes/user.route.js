@@ -9,9 +9,9 @@ import {
   deleteUserById,
   getUserById,
   updateUserById,
-  getNotifications,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  deleteAccount
 } from "../controllers/user.controller.js";
 import {
   authenticate,
@@ -40,9 +40,9 @@ router
   .get(authenticate, authorizeAdmin, getUserById)
   .put(authenticate, authorizeAdmin, updateUserById);
 
-//router.route('/notification').get(authenticate,authorizeAdmin, getNotifications)
-
 router.route('/forgot-password').post(forgotPassword)
 router.route('/reset-password').post(authenticateResetToken, resetPassword)
+
+router.route('/delete/:id').delete(authenticate, deleteAccount)
 
 export default router;

@@ -3,6 +3,7 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import { LuRefreshCw } from "react-icons/lu";
+import { FaEllipsisH } from "react-icons/fa";
 import { useGetOrdersQuery } from "../../redux/api/orderApiSlice";
 import AdminMenu from "./AdminMenu";
 
@@ -27,7 +28,7 @@ const OrderList = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="p-4 flex justify-end mr-[5rem]">
+      {!isLoading && (<div className="p-4 flex justify-end mr-[5rem]">
         <button
           onClick={handleRefresh}
           disabled={refresh}
@@ -38,7 +39,8 @@ const OrderList = () => {
           />
           <span>{refresh ? "Refreshing..." : "Refresh"}</span>
         </button>
-      </div>
+      </div>)}
+
 
       {isLoading ? (
         <Loader />
@@ -113,17 +115,20 @@ const OrderList = () => {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                    {order.paymentMethod === "POD" && order.isPaid && !order.isDelivered
-                        ? calculateDeliveryDate(order.paidAt)
-                        : "N/A"}
+                      {order.paymentMethod === "POD" && !order.isDelivered
+                        ? calculateDeliveryDate(order.createdAt)
+                        : order.paymentMethod === "PayPal" && order.isPaid && !order.isDelivered
+                          ? calculateDeliveryDate(order.paidAt)
+                          : "N/A"}
                     </td>
+
                     <td className="px-6 py-4">
                       <div className="flex space-x-4">
                         <Link
                           to={`/order/${order._id}`}
                           className="text-blue-500 hover:text-blue-400 transition-colors"
                         >
-                          View Details
+                          <FaEllipsisH className="text-normal font-normal" />
                         </Link>
                       </div>
                     </td>

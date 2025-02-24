@@ -207,15 +207,14 @@ const Order = () => {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
-                timeZone: order.timeZone || 'Asia/Kolkata', // Default to IST if no timeZone is provided
+                timeZone: order.timeZone || 'Asia/Kolkata', 
               }).format(new Date(order.paidAt))}
             </Message>
           ) : (
             <Message variant="danger">Not paid</Message>
           )}
 
-          {/* Show "Mark as Paid" button if payment method is POD and order is not paid */}
-          {!order.isPaid && paymentMethod === "POD" && (
+          {userInfo && userInfo.isAdmin && !order.isPaid && paymentMethod === "POD" && (
             <div>
               <button
                 type="button"

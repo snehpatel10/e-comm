@@ -416,9 +416,8 @@
           </html>
         `;
 
-        // Send the email to the user with the invoice PDF attached
         await sendEmail(
-          req.user.email,
+          order.user.email,
           subject,
           text,
           html,
@@ -572,7 +571,7 @@
         `;
 
         // Send the email to the user
-        await sendEmail(req.user.email, subject, text, html, invoicePDF, "Invoice.pdf");
+        await sendEmail(order.user.email, subject, text, html, invoicePDF, "Invoice.pdf");
 
         const updatedOrder = await order.save();
 

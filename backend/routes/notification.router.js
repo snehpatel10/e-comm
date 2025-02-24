@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/').get(async (req, res) => {
   try {
-    const notifications = await Notification.find({isRead: false}); 
+    const notifications = await Notification.find(); 
     res.json(notifications);
   } catch (err) {
     console.error(err);

@@ -11,6 +11,7 @@ import AdminMenu from "./AdminMenu";
 import OrderList from "./OrderList";
 import Loader from "../../components/Loader";
 import { SketchPicker } from "react-color"; // Color picker component
+import { motion } from "framer-motion"; // Import framer-motion
 
 const AdminDashboard = () => {
   const { data: sales, isLoading } = useGetTotalSalesQuery();
@@ -196,45 +197,110 @@ const AdminDashboard = () => {
 
       <section className="flex justify-center items-center flex-col">
         <div className="w-full flex justify-center md:justify-around flex-wrap xl:ml-[4rem] md:ml-[0rem] space-y-4 md:space-y-0">
-          {/* Sales Card */}
-          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
+          {/* Sales Card with animation */}
+          <motion.div
+            className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+          >
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaDollarSign size={20} color="#fff" />
             </div>
             <p className="mt-5">Sales</p>
-            <h1 className="text-xl font-bold">
+            <motion.h1
+              className="text-xl font-bold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
               ${" "}
               {isLoading ? (
                 <Loader />
-              ) : sales?.totalSales ? (
-                parseFloat(sales.totalSales).toFixed(2)
               ) : (
-                "0.00"
+                <motion.span
+                  key={sales?.totalSales}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, type: "spring", stiffness: 100 }}
+                >
+                  {sales?.totalSales
+                    ? parseFloat(sales.totalSales).toFixed(2)
+                    : "0.00"}
+                </motion.span>
               )}
-            </h1>
-          </div>
+            </motion.h1>
+          </motion.div>
 
-          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
+          {/* Customers Card with animation */}
+          <motion.div
+            className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+          >
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaUsers size={20} color="#fff" />
             </div>
             <p className="mt-5">Customers</p>
-            <h1 className="text-xl font-bold">
-              {isLoading ? <Loader /> : customers?.length}
-            </h1>
-          </div>
+            <motion.h1
+              className="text-xl font-bold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <motion.span
+                  key={customers?.length}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, type: "spring", stiffness: 100 }}
+                >
+                  {customers?.length}
+                </motion.span>
+              )}
+            </motion.h1>
+          </motion.div>
 
-          <div className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]">
+          {/* Orders Card with animation */}
+          <motion.div
+            className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+          >
             <div className="font-bold rounded-full w-[3rem] h-[3rem] bg-pink-500 flex items-center justify-center p-3">
               <FaShoppingCart size={20} color="#fff" />
             </div>
             <p className="mt-5">All Orders</p>
-            <h1 className="text-xl font-bold">
-              {isLoading ? <Loader /> : orders?.totalOrders}
-            </h1>
-          </div>
+            <motion.h1
+              className="text-xl font-bold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <motion.span
+                  key={orders?.totalOrders}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, type: "spring", stiffness: 100 }}
+                >
+                  {orders?.totalOrders}
+                </motion.span>
+              )}
+            </motion.h1>
+          </motion.div>
         </div>
 
+        {/* Chart Type and Color Picker Controls */}
         <div className="mt-4 flex justify-center space-x-8">
           <div className="flex flex-col items-center">
             <label className="text-white">Chart Type</label>
@@ -289,15 +355,22 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="mt-[4rem] w-full xl:w-[75%] lg:w-[80%] md:w-[85%]">
+        {/* Chart with Animation */}
+        <motion.div
+          className="mt-[4rem] w-full xl:w-[75%] lg:w-[80%] md:w-[85%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
           <Chart
             options={state.options}
             series={state.series}
             type={state.chartType}
             width="100%"
           />
-        </div>
+        </motion.div>
 
+        {/* Order List Section */}
         <div className="mt-[4rem] w-full flex justify-center">
           <OrderList />
         </div>

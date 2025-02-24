@@ -15,7 +15,6 @@ import {
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
-  console.log(products)
 
   const settings = {
     dots: false,
@@ -29,13 +28,13 @@ const ProductCarousel = () => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-8">
       {isLoading ? null : error ? (
         <Message variant="danger">
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="ml-0 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="ml-0 max-w-lg xl:max-w-3xl">
           <Slider {...settings} className="rounded-lg">
             {products.map(
               ({
@@ -48,46 +47,27 @@ const ProductCarousel = () => {
                 createdAt,
                 numReviews,
                 rating,
-                quantity,
                 countInStock,
               }) => (
-                <div key={_id} className="p-4 rounded-md shadow-md">
+                <div key={_id} className="p-4 rounded-lg shadow-lg transition transform hover:scale-105">
                   <img
                     src={image}
                     alt={name}
-                    className="w-full rounded-lg object-cover h-[20rem]"
+                    className="w-full rounded-lg object-cover h-[350px] mb-4"
                   />
-                  <div className="mt-4 flex flex-col gap-4">
-                    <div>
-                      <h2 className="text-lg font-semibold">{name}</h2>
-                      <p className="text-pink-600 font-medium">${price}</p>
-                      <p className="mt-2 text-sm text-gray-600">
-                        {description.substring(0, 170)}...
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="flex items-center text-sm">
-                          <FaStore className="mr-2 text-gray-500" /> Brand: {brand}
-                        </p>
-                        <p className="flex items-center text-sm">
-                          <FaClock className="mr-2 text-gray-500" /> Added:{" "}
-                          {moment(createdAt).fromNow()}
-                        </p>
-                        <p className="flex items-center text-sm">
-                          <FaStar className="mr-2 text-gray-500" /> Reviews:{" "}
-                          {numReviews}
-                        </p>
+                  <div className="mt-4">
+                    <h2 className="text-2xl font-semibold text-gray-200">{name}</h2>
+                    <p className="text-pink-500 font-medium text-xl">${price}</p>
+                    <p className="mt-2 text-gray-400 text-sm">{description.substring(0, 170)}...</p>
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                      <div className="text-sm text-gray-400">
+                        <p className="flex items-center"><FaStore className="mr-2" />Brand: {brand}</p>
+                        <p className="flex items-center"><FaClock className="mr-2" />Added: {moment(createdAt).fromNow()}</p>
+                        <p className="flex items-center"><FaStar className="mr-2" />Reviews: {numReviews}</p>
                       </div>
-                      <div>
-                        <p className="flex items-center text-sm">
-                          <FaStar className="mr-2 text-gray-500" /> Ratings:{" "}
-                          {Math.round(rating)}
-                        </p>
-                        <p className="flex items-center text-sm">
-                          <FaBox className="mr-2 text-gray-500" /> 
-                          {countInStock>0 ? 'In stock' : 'Out of stock'}
-                        </p>
+                      <div className="text-sm text-gray-400">
+                        <p className="flex items-center"><FaStar className="mr-2" />Ratings: {Math.round(rating)}</p>
+                        <p className="flex items-center"><FaBox className="mr-2" />{countInStock > 0 ? 'In stock' : 'Out of stock'}</p>
                       </div>
                     </div>
                   </div>
@@ -100,5 +80,6 @@ const ProductCarousel = () => {
     </div>
   );
 };
+
 
 export default ProductCarousel;

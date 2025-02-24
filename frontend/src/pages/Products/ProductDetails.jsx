@@ -139,7 +139,7 @@ const ProductDetails = () => {
                 <div>
                   <select
                     value={qty}
-                    onChange={(e) => setQty(e.target.value)}
+                    onChange={(e) => setQty(Number(e.target.value))}
                     className="select select-primary select-bordered w-[6rem] text-white"
                   >
                     {[...Array(product.countInStock).keys()].map((x) => (

@@ -35,7 +35,8 @@ const AllProducts = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-[10rem] object-contain rounded-lg"
+                      className="w-[10rem] object-contain rounded-md"
+                      style={{ height: "160px", width: "160px", objectFit: "cover" }}
                     />
                     <div className="p-4 flex flex-col justify-around">
                       <div className="flex justify-between">
@@ -48,9 +49,7 @@ const AllProducts = () => {
                         </p>
                       </div>
 
-                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description?.substring(0, 60)) + '...' }}/>
-                        {/* {product?.description?.substring(0, 160)}... */}
-          
+                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description?.substring(0, 60)) + '...' }}/>          
 
                       <div className="flex justify-between">
                         <Link

@@ -25,7 +25,7 @@ const AdminProductUpdate = () => {
   const [stock, setStock] = useState(productData?.countInStock);
 
   const [errors, setErrors] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);  // Modal visibility state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const { data: categories = [] } = useFetchCategoriesQuery();
@@ -132,11 +132,16 @@ const AdminProductUpdate = () => {
   };
 
   const handleDelete = async () => {
+    if (!productData || !productData.name) {
+      toast.error("Product data is not available.");
+      return;
+    }
     try {
-      const { data } = await deleteProduct(params._id);
+      const { data } = await deleteProduct(params.id); 
       toast.success(`"${data.name}" deleted successfully`);
       navigate("/admin/allproductslist");
     } catch (err) {
+      console.error(err);
       toast.error("Delete failed");
     }
   };
@@ -262,12 +267,15 @@ const AdminProductUpdate = () => {
               >
                 Update
               </button>
-              <button
-                onClick={() => setIsModalOpen(true)}  // Open modal on click
-                className=" btn btn-primary rounded-lg text-lg font-bold text-white"
-              >
-                Delete
-              </button>
+              {productData && (
+                <button
+                  onClick={() => setIsModalOpen(true)} 
+                  className="btn btn-primary rounded-lg text-lg font-bold text-white"
+                >
+                  Delete
+                </button>
+              )}
+
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";  // Importing motion
 import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "./Loader";
 import SmallProduct from "../pages/Products/SmallProduct";
@@ -16,19 +17,34 @@ function Header() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-start gap-3 p-4">
+    <motion.div
+      className="flex flex-col lg:flex-row justify-between items-start gap-6 p-8"
+      initial={{ opacity: 0 }}  
+      animate={{ opacity: 1 }} 
+      transition={{ duration: 1 }}  
+    >
       {/* Product List */}
-      <div className="w-[23vh] ml-[3rem] lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <motion.div
+        className="w-full ml-[3rem] lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6"
+        initial={{ opacity: 0, x: -100 }} 
+        animate={{ opacity: 1, x: 0 }} 
+        transition={{ duration: 0.6, ease: "easeInOut" }} 
+      >
         {data.map((product) => (
           <SmallProduct key={product._id} product={product} />
         ))}
-      </div>
+      </motion.div>
 
       {/* Carousel */}
-      <div className="lg:w-1/2">
+      <motion.div
+        className="lg:w-1/2"
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }} 
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      >
         <ProductCarousel />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

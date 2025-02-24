@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import ProgressSteps from "../../components/ProgressSteps";
 import Loader from "../../components/Loader";
 import { useCreateOrderMutation } from "../../redux/api/orderApiSlice";
 import { clearCartItems } from "../../redux/features/cart/carSlice";
+import CartAnimation from "../CartAnimation";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
@@ -14,7 +15,9 @@ const PlaceOrder = () => {
   const dispatch = useDispatch();
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
-  console.log(cart);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false); // Track animation state
+  const [cartItems, setCartItems] = useState([]); // Store cart items for animation
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -24,19 +27,32 @@ const PlaceOrder = () => {
 
   const placeOrderHandler = async () => {
     try {
-      const res = await createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
-      }).unwrap();
-      dispatch(clearCartItems());
-      navigate(`/order/${res._id}`, { replace: true });
+      setIsPlacingOrder(true);
+      setCartItems(cart.cartItems); // Set cart items for animation
+      setIsAnimating(true); // Trigger the animation
+
+      // Simulate a delay for the animation
+      setTimeout(async () => {
+        const res = await createOrder({
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        }).unwrap();
+
+        // Clear cart and navigate after placing the order
+        dispatch(clearCartItems());
+        setIsPlacingOrder(false);
+        setIsAnimating(false); // End the animation
+        navigate(`/order/${res._id}`, { replace: true });
+      }, 2000); // Animation delay (2 seconds)
     } catch (error) {
       toast.error(error);
+      setIsPlacingOrder(false);
+      setIsAnimating(false);
     }
   };
 
@@ -45,7 +61,6 @@ const PlaceOrder = () => {
       <ProgressSteps step1 step2 step3 />
 
       <div className="max-w-5xl mx-auto mt-8 px-4">
-        {/* Conditional rendering for cart items and order summary */}
         {cart.cartItems.length === 0 ? (
           <Message>Your cart is empty</Message>
         ) : (
@@ -128,14 +143,17 @@ const PlaceOrder = () => {
               <button
                 type="button"
                 className="w-full btn bg-gradient-to-r from-pink-500 to-pink-700 text-white py-3 mt-6 rounded-lg text-lg hover:cursor-pointer font-semibold shadow-md hover:from-pink-600 hover:to-pink-800 transition-all"
-                disabled={cart.cartItems.length === 0}
+                disabled={cart.cartItems.length === 0 || isPlacingOrder}
                 onClick={placeOrderHandler}
               >
-                Place Order
+                {isPlacingOrder ? "Placing Order..." : "Place Order"}
               </button>
 
               {isLoading && <Loader />}
             </div>
+
+            {/* Show the Cart Animation if placing order */}
+            {isAnimating && <CartAnimation items={cart.cartItems} />}
           </>
         )}
       </div>

@@ -4,12 +4,12 @@ import HeartIcon from "./HeartIcon";
 
 function SmallProduct({ product }) {
   return (
-    <div className="w-[15rem] p-2">
+    <div className="w-[15rem] p-2 bg-[#1a1a1a] rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
       <div className="relative">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-[150px] rounded"
+          className="w-full h-[170px] object-cover rounded-lg transition duration-300 hover:opacity-90"
         />
         <HeartIcon product={product} />
         <div className="p-54">

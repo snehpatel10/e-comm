@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { useProfileMutation } from "../../redux/api/userApiSlice";
+import { FaTrashAlt } from 'react-icons/fa';
+import { logout } from "../../redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Profile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confirmUsername, setConfirmUsername] = useState("");
+  const [error, setError] = useState(""); // State for handling errors
 
+  const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
-
-  const [updateProfile, { isLoading: loadingUpdateProfile }] =
-    useProfileMutation();
+  const [updateProfile, { isLoading: loadingUpdateProfile }] = useProfileMutation();
 
   useEffect(() => {
     setUsername(userInfo.username);
@@ -28,7 +33,7 @@ function Profile() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      setError("Passwords do not match"); // Set error message here
       return;
     } else {
       try {
@@ -41,8 +46,27 @@ function Profile() {
         dispatch(setCredentials({ ...res }));
         toast.success("Profile updated successfully");
       } catch (error) {
-        toast.error(error?.data?.message || error.message);
+        setError(error?.data?.message || error.message); // Handle errors here
       }
+    }
+  };
+
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+
+    if (confirmUsername !== userInfo.username) {
+      setError("Username does not match. Please try again."); // Display error if username doesn't match
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/users/delete/${userInfo._id}`, { withCredentials: true });
+      toast.success("Account deleted successfully");
+      dispatch(logout());
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during account deletion:", error);
+      setError(error.response?.data?.message || error.message || 'An unexpected error occurred'); // Handle deletion errors
     }
   };
 
@@ -54,19 +78,6 @@ function Profile() {
           <form onSubmit={submitHandler}>
             <div className="mb-6">
               <label className="input input-bordered flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path
-                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
-                  />
-                  <path
-                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
-                  />
-                </svg>
                 <input
                   type="text"
                   className="grow text-white"
@@ -78,16 +89,6 @@ function Profile() {
             </div>
             <div className="mb-6">
               <label className="input input-bordered flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
-                  />
-                </svg>
                 <input
                   type="text"
                   className="grow text-white"
@@ -99,18 +100,6 @@ function Profile() {
             </div>
             <div className="mb-6">
               <label className="input input-bordered flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
                 <input
                   type="password"
                   className="grow text-white"
@@ -122,18 +111,6 @@ function Profile() {
             </div>
             <div className="mb-6">
               <label className="input input-bordered flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
                 <input
                   type="password"
                   className="grow text-white"
@@ -159,8 +136,53 @@ function Profile() {
               </Link>
             </div>
           </form>
+
+          {!userInfo.isAdmin && (
+            <div className="mt-6 w-full">
+              <button
+                className="bg-red-500 btn text-white w-full mx-auto rounded hover:bg-red-600 flex items-center justify-center gap-2"
+                onClick={() => setModalOpen(true)}
+              >
+                <FaTrashAlt className="h-5 w-5" />
+                Delete Account
+              </button>
+            </div>
+          )}
         </div>
+
         {loadingUpdateProfile && <Loader />}
+
+        {modalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="modal modal-open">
+              <div className="modal-box bg-white/30 backdrop-blur-md">
+                <h3 className="text-xl font-semibold mb-4">Confirm Account Deletion</h3>
+                <p className="mb-4">Please enter your <span className="font-extrabold">username</span> to confirm account deletion.</p>
+                <input
+                  type="text"
+                  className="input input-bordered w-full mb-2 text-white"
+                  value={confirmUsername}
+                  onChange={(e) => setConfirmUsername(e.target.value)}
+                />
+                {error && <p className="text-red-500 text-sm mt-0 font-bold">{error}</p>} 
+                <div className="flex justify-end gap-4 mt-4">
+                  <button
+                    className="btn btn-error text-white py-2 px-4 rounded hover:bg-red-600 border-none"
+                    onClick={handleDeleteAccount}
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    className="btn bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 border-none"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
