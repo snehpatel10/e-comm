@@ -20,7 +20,7 @@ export default defineConfig({
 
   build: {
     // Set the output directory to dist for Vercel deployment
-    outDir: 'dist',
+    outDir: 'frontend/dist',
     
     // Chunking optimization
     rollupOptions: {
