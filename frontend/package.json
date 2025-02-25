@@ -15,6 +15,7 @@
     "aos": "^2.3.4",
     "apexcharts": "^4.3.0",
     "axios": "^1.7.9",
+    "dompurify": "^3.2.4",
     "flowbite": "^2.5.2",
     "framer-motion": "^12.4.7",
     "moment": "^2.30.1",
