@@ -10,7 +10,7 @@ import {
 } from "../redux/features/shop/shopSlice";
 import Loader from "../components/Loader";
 import AOS from "aos";
-import "aos/dist/aos.css"; 
+import "aos/dist/aos.css";
 import ProductCard from "./Products/ProductCard";
 
 const Shop = () => {
@@ -27,8 +27,6 @@ const Shop = () => {
     radio,
   });
 
-  const [hasScrolled, setHasScrolled] = useState(false); // Track scroll state
-
   useEffect(() => {
     setTimeout(() => {
       AOS.init({
@@ -36,7 +34,7 @@ const Shop = () => {
         easing: "ease-in-out",
         once: true,
       });
-    }, 300); 
+    }, 300);
   }, []);
 
   useEffect(() => {
@@ -56,7 +54,6 @@ const Shop = () => {
             );
           }
         );
-
         dispatch(setProducts(filteredProducts));
       }
     }
@@ -89,6 +86,7 @@ const Shop = () => {
   const handlePriceChange = (e) => {
     setPriceFilter(e.target.value);
   };
+
 
   return (
     <div className="container mx-auto px-4 md:px-12">
@@ -188,11 +186,23 @@ const Shop = () => {
                     delay: 0.2,
                   }}
                 >
-                  <ProductCard p={p} hasScrolled={hasScrolled} />
+                  <ProductCard p={p} />
                 </motion.div>
               ))
             )}
           </motion.div>
+
+          {products.length != 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              className=" text-white p-5 rounded-lg mt-10 text-center"
+            >
+              <h2 className="text-2xl font-bold">No More Products Available!</h2>
+              <p>Check back later for new items!</p>
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
