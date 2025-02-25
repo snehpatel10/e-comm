@@ -7,18 +7,33 @@ export default defineConfig({
       '/upload': 'http://localhost:5000',
     },
   },
-  
+
+  // Optimizing dependencies and including client-only libraries for faster builds
   optimizeDeps: {
-    include: ['react-toastify', 'framer-motion'], 
+    include: ['react-toastify', 'framer-motion', 'react-intersection-observer'],
   },
-  
+
+  // Treating client-only libraries as external to avoid SSR issues
   ssr: {
-    external: ['react-toastify', 'framer-motion'], 
+    external: ['react-toastify', 'framer-motion', 'react-intersection-observer'],
   },
-  
+
   build: {
+    // Set the output directory to dist for Vercel deployment
+    outDir: 'dist',
+    
+    // Chunking optimization
     rollupOptions: {
-      external: ['react-toastify', 'framer-motion'], 
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor'; // Bundle all dependencies into a single chunk
+          }
+        },
+      },
     },
+    
+    // If you need to adjust the chunk size limit (in KB)
+    chunkSizeWarningLimit: 1000, // Set this to 1000KB (1MB) to suppress warnings
   },
 });
