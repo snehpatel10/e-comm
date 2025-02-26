@@ -1,20 +1,124 @@
-#navigation-container {
-  width: 4%;
-  transition: width 0.3s ease-in-out;
-  overflow: hidden; /* Hide overflowing content during transition */
+/* Basic Navbar Styling */
+.top-nav {
+  width: 100%;
+  background-color: #1b1b1b;
+  padding: 12px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#navigation-container:hover {
-  width: 15%;
+.website-name {
+  flex-grow: 1;
+  text-align: left;
 }
 
-/* Initially hide nav-item-name */
+.website-name-link {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  position: relative;
+  padding: 8px;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #ff6347; /* Hover effect color */
+}
+
 .nav-item-name {
+  margin-left: 8px;
   display: none;
-  transition: opacity 0.2s ease-in-out; /* Add opacity transition */
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
-#navigation-container:hover .nav-item-name {
+.nav-item:hover .nav-item-name {
+  display: inline-block;
+  opacity: 1;
+}
+
+.profile-cart {
+  display: flex;
+  align-items: center;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.profile-icon {
+  background-color: #4c3c7f;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #333;
+  border-radius: 6px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  margin-top: 10px;
   display: block;
   opacity: 1;
+  transition: opacity 0.3s ease-out;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #ff6347;
+}
+
+.logout {
+  color: red;
+}
+
+.cart-count,
+.notification-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff6347;
+  color: white;
+  padding: 3px 6px;
+  border-radius: 50%;
+  font-size: 14px;
 }
