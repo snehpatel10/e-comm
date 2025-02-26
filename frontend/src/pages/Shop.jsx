@@ -199,7 +199,7 @@ const Shop = () => {
               transition={{ duration: 1 }}
               className=" text-white p-5 rounded-lg mt-10 text-center"
             >
-              <h2 className="text-2xl font-bold">No More Products Available!</h2>
+              <h2 className="text-2xl font-normal">Looks like you've reached the end!</h2>
               <p>Check back later for new items!</p>
             </motion.div>
           )}

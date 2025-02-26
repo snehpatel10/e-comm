@@ -79,9 +79,12 @@ const ProductDetails = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">
-          {error?.data?.message || error.message}
+        <div className="mx-[4rem] mt-[1rem] ">
+          <Message variant="danger">
+          {error?.data?.message || error.message || "Product was removed by seller"}
         </Message>
+        </div>
+        
       ) : (
         <div className="flex flex-wrap relative items-start mt-[2rem] ml-[10rem]">
           <div className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem] mb-6">
