@@ -66,7 +66,8 @@ const Navigation = () => {
       {/* Website Name - Left Side */}
       <div className="website-name">
         <Link to="/" className="nav-item website-name-link">
-          My E-Commerce
+          <span className="text-pink-500">Tech</span>
+          <span className="text-white">Shop</span>
         </Link>
       </div>
 
