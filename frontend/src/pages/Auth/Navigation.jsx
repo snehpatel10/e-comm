@@ -74,7 +74,7 @@ const Navigation = () => {
     if (unreadCount) {
       setUnreadNotificationsCount(parseInt(unreadCount, 10));
     }
-  }, []);
+  }, [localStorage]);
 
   // Close dropdown when sidebar is closed
   useEffect(() => {

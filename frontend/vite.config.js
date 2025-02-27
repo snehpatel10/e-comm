@@ -3,8 +3,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:5000',
-      '/upload': 'http://localhost:5000',
+      '/api': 'https://e-comm-nv1o15m7c-snehpatel10s-projects.vercel.app/',
+      '/upload': 'https://e-comm-nv1o15m7c-snehpatel10s-projects.vercel.app/',
     },
   },
 
