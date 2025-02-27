@@ -147,11 +147,11 @@ const AdminProductUpdate = () => {
   };
 
   return (
-    <div className="container xl:ml-[10rem] sm:ml-[0]">
+    <div className="container xl:ml-[9rem] sm:ml-[0] mt-[4rem]">
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12 text-xl">Update / Delete Product</div>
+          <div className="h-12 text-2xl">Update / Delete Product</div>
 
           {image && (
             <div className="text-center">

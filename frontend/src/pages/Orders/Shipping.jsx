@@ -71,7 +71,7 @@ const Shipping = () => {
   }, [navigate, shippingAddress]);
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-[4rem]">
       <ProgressSteps step1 step2 />
       <div className="mt-[5rem] flex justify-around items-center flex-wrap">
         <form onSubmit={submitHandler} className="w-[40rem]">

@@ -30,6 +30,14 @@ function Register() {
     if (userInfo) {
       navigate(redirect);
     }
+
+    // Disable scroll when component is mounted
+    document.body.style.overflow = "hidden";
+
+    // Clean up on component unmount
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [navigate, redirect, userInfo]);
 
   const validateEmail = (email) => {

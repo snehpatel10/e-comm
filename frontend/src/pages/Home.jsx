@@ -30,7 +30,7 @@ function Home() {
             transition={{ duration: 0.6 }}
             className="flex justify-between items-center mt-10"
           >
-            <h1 className="ml-32 text-3xl">Special Products</h1>
+            <h1 className="ml-[3rem] text-3xl">Special Products</h1>
             <Link
               to="/shop"
               className="bg-pink-600 btn hover:bg-pink-700 font-bold rounded-full py-2 px-10 mr-32"
@@ -41,7 +41,7 @@ function Home() {
 
           {/* Product Grid with staggered fade-in animation */}
           <motion.div
-            className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ml-[1.5rem] sm:ml-[1rem]"
+            className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
             initial="hidden"
             animate="visible"
             variants={{

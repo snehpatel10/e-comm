@@ -17,7 +17,7 @@ const Product = ({ product }) => {
 
   return (
     <motion.div
-      className="w-full sm:w-[22rem] lg:w-[25rem] p-4 bg-gradient-to-br from-gray-800 to-[#1c1c1c] rounded-lg shadow-lg ml-[2.5rem]"
+      className="w-full sm:w-[22rem] lg:w-[25rem] p-4 bg-gradient-to-br from-gray-800 to-[#1c1c1c] rounded-lg shadow-lg ml-[1rem]"
       initial={{ opacity: 0, y: 100 }}  
       animate={{ opacity: 1, y: 0 }}  
       transition={{

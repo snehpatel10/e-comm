@@ -196,7 +196,7 @@ const AdminDashboard = () => {
       <AdminMenu />
 
       <section className="flex justify-center items-center flex-col">
-        <div className="w-full flex justify-center md:justify-around flex-wrap xl:ml-[4rem] md:ml-[0rem] space-y-4 md:space-y-0">
+        <div className="w-full flex justify-center md:justify-around flex-wrap xl:ml-[1rem] md:ml-[0rem] space-y-4 md:space-y-0 mt-[4rem]">
           {/* Sales Card with animation */}
           <motion.div
             className="rounded-lg bg-black p-5 w-full sm:w-[18rem] md:w-[20rem]"
@@ -371,7 +371,7 @@ const AdminDashboard = () => {
         </motion.div>
 
         {/* Order List Section */}
-        <div className="mt-[4rem] w-full flex justify-center">
+        <div className="w-[100%] flex justify-center">
           <OrderList />
         </div>
       </section>

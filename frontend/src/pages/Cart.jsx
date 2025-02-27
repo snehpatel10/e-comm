@@ -38,14 +38,14 @@ const Cart = () => {
   };
 
   return (
-    <div className="container flex justify-around items-start flex-wrap mx-auto mt-8">
+    <div className="container flex justify-around items-start flex-wrap mx-auto mt-[4rem]">
       {cartItems.length === 0 ? (
         <div>
           Your cart is empty <Link to="/shop">Go To Shop</Link>
         </div>
       ) : (
-        <div className="flex flex-col w-[80%]">
-          <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
+        <div className="flex flex-col w-full  mx-[4rem]">
+          <h1 className="text-2xl mb-4">Shopping Cart</h1>
 
           {/* Wrap cart items with AnimatePresence for removal animations */}
           <AnimatePresence>
@@ -69,7 +69,7 @@ const Cart = () => {
                   />
                 </div>
 
-                <div className="flex-1 ml-4">
+                <div className="flex-1 ml-[1rem]">
                   <Link to={`/product/${item._id}`} className="text-pink-500">
                     {item.name}
                   </Link>
@@ -108,7 +108,7 @@ const Cart = () => {
 
                 <div>
                   <button
-                    className="text-red-500 ml-4"
+                    className="text-red-500 ml-[1rem]"
                     onClick={() => removeFromCartHandler(item._id)}
                   >
                     <FaTrash className="ml-[1rem] mt-[.5rem]" />

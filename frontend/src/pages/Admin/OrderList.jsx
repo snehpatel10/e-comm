@@ -27,7 +27,7 @@ const OrderList = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col mt-[4rem]">
       {!isLoading && (<div className="p-4 flex justify-end mr-[5rem]">
         <button
           onClick={handleRefresh}
@@ -49,7 +49,7 @@ const OrderList = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="flex-1 p-6 lg:ml-12">
+        <div className="flex-1 p-6">
           {/* Adjust the AdminMenu position */}
           <div className="relative z-10">
             <AdminMenu />

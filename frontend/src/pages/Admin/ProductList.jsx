@@ -8,8 +8,8 @@ import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
 import AdminMenu from "./AdminMenu";
 
-const ProductList = () => {
-  const [image, setImage] = useState("");
+ const ProductList = () => {
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -93,11 +93,11 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container xl:mx-[9rem] sm:mx-[0]">
+    <div className="container xl:mx-[9rem] sm:mx-[0] mt-[4rem]">
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12 text-xl">Create Product</div>
+          <div className="h-12 text-2xl">Create Product</div>
 
           {imageUrl && (
             <div className="text-center">

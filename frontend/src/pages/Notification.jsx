@@ -77,8 +77,8 @@ function Notification() {
   };
 
   return (
-    <div className="ml-[3rem] mt-[2rem] p-4 rounded-lg shadow-md bg-white dark:bg-[#121212]">
-      <h1 className="text-xl font-bold uppercase mb-4 text-white">Notifications</h1>
+    <div className="ml-[4rem] mr-[2rem] mt-[4rem] rounded-lg shadow-md bg-white dark:bg-[#121212]">
+      <h1 className="text-2xl mb-4 text-white">Notifications</h1>
 
       {loading ? (
         <div className="flex justify-center items-center">

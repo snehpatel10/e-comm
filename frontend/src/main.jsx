@@ -37,6 +37,8 @@ import AuthLayout from "./components/AuthLayout.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
 import NotFound from "./components/NotFound.jsx";
+import About from "./pages/About.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,6 +53,8 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<Cart />}/>
       <Route path='/shop' element={<Shop />}/>
       <Route path='/user-orders' element={<UserOrder />}/>
+      <Route path='/about' element={<About />}/>
+      <Route path='/contact' element={<ContactUs />}/>
 
       <Route path="" element={<PrivateRouter />}>
         <Route path="/profile" element={<Profile />} />

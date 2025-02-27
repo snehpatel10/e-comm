@@ -18,10 +18,10 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="container mx-[9rem]">
+      <div className="container ml-[4rem] mr-[2rem] mt-[4rem]">
         <div className="flex flex-col  md:flex-row">
           <div className="p-3">
-            <div className="ml-[2rem] text-xl font-bold h-12">
+            <div className="ml-[2rem] text-2xl h-12">
               All Products ({products.length})
             </div>
             <div className="flex flex-wrap justify-around items-center">
@@ -36,7 +36,7 @@ const AllProducts = () => {
                       src={product.image}
                       alt={product.name}
                       className="w-[10rem] object-contain rounded-md"
-                      style={{ height: "160px", width: "160px", objectFit: "cover" }}
+                      style={{ height: "200px", width: "320px", objectFit: "cover" }}
                     />
                     <div className="p-4 flex flex-col justify-around">
                       <div className="flex justify-between">

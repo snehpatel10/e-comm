@@ -25,9 +25,17 @@ function Login() {
   const redirect = sp.get("redirect") || "/";
 
   useEffect(() => {
+    // Disable scrolling when login page is mounted
+    document.body.style.overflow = "hidden";
+
     if (userInfo) {
       navigate(redirect);
     }
+
+    return () => {
+      // Restore scroll behavior when component is unmounted
+      document.body.style.overflow = "auto";
+    };
   }, [navigate, redirect, userInfo]);
 
   const validateEmail = (email) => {
@@ -65,7 +73,7 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100">
+    <div className="flex justify-center items-center min-h-screen bg-base-100 ">
       <section className="flex w-full max-w-6xl overflow-hidden rounded-lg">
         {/* Left Side: Form */}
         <div className="w-full lg:w-1/2 p-8">
@@ -100,8 +108,6 @@ function Login() {
               {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
             </div>
 
-
-
             <div className="mt-6 relative">
               <label className="input input-bordered flex items-center gap-2 w-full">
                 <svg
@@ -135,7 +141,6 @@ function Login() {
                 </div>
               )}
             </div>
-
 
             <div className="text-right mt-4">
               <Link to='/forgot-password' className="text-sm text-pink-500 hover:underline">

@@ -77,8 +77,8 @@ function UserList() {
       </div>
 
       {/* Main Content */}
-      <div className="p-4 w-full">
-        <h1 className="pl-[8rem] text-2xl font-semibold mb-6 text-white">Users</h1>
+      <div className="p-4 w-full mt-[4rem]">
+        <h1 className="pl-[4rem] text-2xl mb-6 text-white">Users</h1>
         {isLoading ? (
           <Loader />
         ) : error ? (
