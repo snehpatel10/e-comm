@@ -6,15 +6,15 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 
-import connectDB from "./config/db.js";
-import userRouter from "./routes/user.route.js";
-import categoryRouter from "./routes/category.route.js";
-import productRouter from "./routes/product.route.js";
-import uploadRouter from "./routes/upload.route.js";
-import orderRouter from "./routes/order.route.js";
-import notificationRouter from "./routes/notification.router.js";
+import connectDB from "../config/db.js";
+import userRouter from "../routes/user.route.js";
+import categoryRouter from "../routes/category.route.js";
+import productRouter from "../routes/product.route.js";
+import uploadRouter from "../routes/upload.route.js";
+import orderRouter from "../routes/order.route.js";
+import notificationRouter from "../routes/notification.router.js";
 
-import Notification from "./models/notification.model.js";
+import Notification from "../models/notification.model.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
