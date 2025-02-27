@@ -16,17 +16,11 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "destination": "/frontend/dist/index.html"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/$1"
+      "source": "/api/(.*)",
+      "destination": "/backend/$1"
     }
   ]
 }
