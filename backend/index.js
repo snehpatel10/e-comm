@@ -116,4 +116,3 @@ io.on("connection", (socket) => {
 
 export { io };
 
-server.listen(port, () => console.log(`Server is listing on port ${port}`));
