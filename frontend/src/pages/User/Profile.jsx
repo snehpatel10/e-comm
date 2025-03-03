@@ -16,7 +16,7 @@ function Profile() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmUsername, setConfirmUsername] = useState("");
-  const [error, setError] = useState(""); // State for handling errors
+  const [error, setError] = useState(""); 
 
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
@@ -33,7 +33,7 @@ function Profile() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match"); // Set error message here
+      setError("Passwords do not match"); 
       return;
     } else {
       try {
@@ -46,7 +46,7 @@ function Profile() {
         dispatch(setCredentials({ ...res }));
         toast.success("Profile updated successfully");
       } catch (error) {
-        setError(error?.data?.message || error.message); // Handle errors here
+        setError(error?.data?.message || error.message); 
       }
     }
   };
@@ -55,7 +55,7 @@ function Profile() {
     e.preventDefault();
 
     if (confirmUsername !== userInfo.username) {
-      setError("Username does not match. Please try again."); // Display error if username doesn't match
+      setError("Username does not match. Please try again."); 
       return;
     }
 
@@ -66,15 +66,23 @@ function Profile() {
       navigate("/login");
     } catch (error) {
       console.error("Error during account deletion:", error);
-      setError(error.response?.data?.message || error.message || 'An unexpected error occurred'); // Handle deletion errors
+      setError(error.response?.data?.message || error.message || 'An unexpected error occurred');
     }
   };
+
+  useEffect(() => {
+      document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto'; // Clean up when the component is unmounted
+    };
+  }, [modalOpen]);
 
   return (
     <div className="container mx-auto p-4 mt-[4rem]">
       <div className="flex justify-center align-center md:flex md:space-x-4">
         <div className="md:w-1/3">
-          <h2 className="text-2xl font-semibold mb-9">Update Profile</h2>
+          <h2 className="text-2xl font-semibold mb-8">Update Profile</h2>
           <form onSubmit={submitHandler}>
             <div className="mb-6">
               <label className="input input-bordered flex items-center gap-2">

@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  AiOutlineHome,
-  AiOutlineShopping,
-  AiOutlineShoppingCart,
   AiOutlineLogin,
   AiOutlineUserAdd,
 } from "react-icons/ai";
-import { HiOutlineHeart } from "react-icons/hi";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./Navigation.css";
@@ -35,6 +31,7 @@ const Navigation = () => {
       await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/login");
+      setDropdownOpen(false)
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +40,7 @@ const Navigation = () => {
   // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
         setDropdownOpen(false); // Close dropdown
       }
     };
@@ -136,23 +133,27 @@ const Navigation = () => {
         {/* Right side icons */}
         <div className="flex items-center space-x-8">
           {userInfo && userInfo.isAdmin && (
-            <Link
-              to="/admin/notification"
-              className="relative flex items-center transition-transform transform hover:translate-x-2"
-            >
-              <MdOutlineNotificationsNone size={26} />
-              {unreadNotificationsCount > 0 && (
-                <span className="absolute top-[-6px] right-[-6px] px-1 py-0 text-xs text-white bg-pink-500 rounded-full">
-                  {unreadNotificationsCount}
-                </span>
-              )}
-            </Link>
+           <NavLink
+           to="/admin/notification"
+           className={({ isActive }) =>
+             isActive
+               ? "relative flex items-center text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
+               : "relative flex items-center text-white transition-transform transform hover:translate-x-2"
+           }
+         >
+           <MdOutlineNotificationsNone size={26} />
+           {unreadNotificationsCount > 0 && (
+             <span className="absolute top-[-6px] right-[-6px] px-1 py-0 text-xs text-white bg-pink-500 rounded-full">
+               {unreadNotificationsCount}
+             </span>
+           )}
+         </NavLink>
           )}
           {userInfo ? (
             <div className="relative">
               <button
                 ref={buttonRef}
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => setDropdownOpen((prev) => !prev)} // Toggle dropdown state
                 className="flex items-center text-white focus:outline-none"
               >
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-900 text-base">
@@ -188,7 +189,14 @@ const Navigation = () => {
                       <li><Link to="/admin/userlist" className="block px-4 py-2 hover:bg-primary hover:text-white transition-all duration-150 ease-out">Users</Link></li>
                     </>
                   )}
-                  <li><Link to="/profile" className="block px-4 py-2 hover:bg-primary hover:text-white transition-all duration-150 ease-out">Profile</Link></li>
+                  <li><Link
+                    to="/profile"
+                    className={`block px-4 py-2 hover:bg-primary hover:text-white transition-all duration-150 ease-out 
+                      ${userInfo.isAdmin ? "rounded-t-none" : "rounded-t-lg"} 
+                      transition-[border-radius] duration-150 ease-out`}
+                  >
+                    Profile
+                  </Link></li>
                   <li><Link onClick={logoutHandler} className="block px-4 py-2 hover:bg-red-700 hover:text-white hover:rounded-b-lg transition-all duration-150 ease-out">Logout</Link></li>
                 </ul>
               )}

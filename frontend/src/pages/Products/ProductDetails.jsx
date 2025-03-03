@@ -67,10 +67,10 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div>
+      <div className=" ml-[4rem] mt-[4rem]">
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-white font-semibold hover:underline"
         >
           Go Back
         </Link>
@@ -79,14 +79,14 @@ const ProductDetails = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <div className="mx-[4rem] mt-[1rem] ">
+        <div className="mx-[4rem] mt-[4rem] ">
           <Message variant="danger">
           {error?.data?.message || error.message || "Product was removed by seller"}
         </Message>
         </div>
         
       ) : (
-        <div className="flex flex-wrap relative items-start mt-[2rem] ml-[10rem]">
+        <div className="flex flex-wrap relative items-start mt-[2rem] ml-[4rem]">
           <div className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem] mb-6">
             <img
               src={product.image}
