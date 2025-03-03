@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import http from "http";
 import { Server } from "socket.io";
 
 import connectDB from "./config/db.js";
@@ -16,14 +17,12 @@ import notificationRouter from "./routes/notification.router.js";
 import Notification from "./models/notification.model.js";
 
 dotenv.config();
+const port = process.env.PORT || 5000;
 
-// Connect to the database
 connectDB();
 
-// Initialize Express app
 const app = express();
 
-// CORS configuration
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, 
@@ -32,12 +31,10 @@ app.use(
   })
 );
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// API Routes
 app.use("/api/users", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/products", productRouter);
@@ -52,7 +49,9 @@ app.get("/api/config/paypal", (req, res) => {
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-const io = new Server(app, {
+const server = http.createServer(app);
+
+const io = new Server(server, {
   cors: {
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -115,4 +114,6 @@ io.on("connection", (socket) => {
   });
 });
 
-export default app;
+export { io };
+
+server.listen(port, () => console.log(`Server is listing on port ${port}`));
