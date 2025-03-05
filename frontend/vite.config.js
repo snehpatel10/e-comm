@@ -3,8 +3,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'https://e-comm-i6t2.onrender.com',
-      '/upload': 'https://e-comm-i6t2.onrender.com',
+      '/api': 'http://localhost:5000',
+      '/upload': 'http://localhost:5000',
     },
   },
 
