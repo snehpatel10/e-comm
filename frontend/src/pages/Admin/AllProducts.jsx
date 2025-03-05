@@ -40,8 +40,11 @@ const AllProducts = () => {
                     />
                     <div className="p-4 flex flex-col justify-around">
                       <div className="flex justify-between">
-                        <h5 className="text-xl font-semibold mb-2">
-                          {product?.name}
+                        <h5 className="text-xl font-semibold mb-2" dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(
+                              product?.name?.length > 20 ? product?.name?.substring(0, 30) + '...' : product?.name
+                            )
+                          }}>
                         </h5>
 
                         <p className="text-gray-400 text-xs">
