@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "backend": "nodemon backend/index.js",
-    "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend\""       
-  },
+"scripts": {
+  "frontend-build": "npm run build --prefix frontend", 
+  "backend-start": "node backend/index.js",
+  "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+  "frontend": "npm run dev --prefix frontend", 
+  "start": "npm run frontend-build && npm run backend-start"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
