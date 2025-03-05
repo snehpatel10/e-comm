@@ -1,6 +1,6 @@
 import express from 'express';
 import Notification from '../models/notification.model.js';
-import { io } from '../api/index.js';
+import { io } from '../index.js';
 
 const router = express.Router();
 

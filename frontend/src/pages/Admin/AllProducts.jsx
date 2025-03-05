@@ -40,19 +40,20 @@ const AllProducts = () => {
                     />
                     <div className="p-4 flex flex-col justify-around">
                       <div className="flex justify-between">
-                        <h5 className="text-xl font-semibold mb-2" dangerouslySetInnerHTML={{
+                        <h5
+                          className="text-xl font-semibold mb-2"
+                          dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(
                               product?.name?.length > 20 ? product?.name?.substring(0, 30) + '...' : product?.name
                             )
-                          }}>
-                        </h5>
-
+                          }}
+                        ></h5>
                         <p className="text-gray-400 text-xs">
                           {moment(product.createdAt).format("MMMM Do YYYY")}
                         </p>
                       </div>
 
-                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description?.substring(0, 60)) + '...' }}/>          
+                      <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description?.substring(0, 60)) + '...' }} />
 
                       <div className="flex justify-between">
                         <Link

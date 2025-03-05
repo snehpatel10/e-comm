@@ -6,7 +6,7 @@
   import sendEmail from "../utils/nodemailer.js";
   import moment from "moment";
   import puppeteer from "puppeteer";
-  import { io } from "../api/index.js";
+  import { io } from "../index.js";
 
   function calcPrices(orderItems) {
     // Calculate the price of the items
