@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'; 
 
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'https://e-comm-jpql.onrender.com',
-      '/upload': 'https://e-comm-jpql.onrender.com',
+      '/api': "https://e-comm-jpql.onrender.com",
+      '/upload': "https://e-comm-jpql.onrender.com",
     },
   },
 
@@ -18,7 +18,7 @@ export default defineConfig({
 
   build: {
     outDir: 'build',
-    
+
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -28,7 +28,7 @@ export default defineConfig({
         },
       },
     },
-    
-    chunkSizeWarningLimit: 1000, 
+
+    chunkSizeWarningLimit: 1000,
   },
 });

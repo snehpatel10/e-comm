@@ -323,7 +323,7 @@
         const expectedDeliveryDate = moment(order.paidAt).add(3, 'days').format('MMMM Do YYYY');
 
         // Generate invoice for the order
-        const invoicePDF = await generateInvoice(order);
+        //const invoicePDF = await generateInvoice(order);
 
         const subject = `Payment Successful for Order #${order._id}`;
         const text = `Dear ${req.user.username},\n\nYour payment for Order #${order._id} was successful. The expected delivery date for your order is ${expectedDeliveryDate}.\n\nThank you for shopping with us!`;
@@ -421,9 +421,9 @@
           order.user.email,
           subject,
           text,
-          html,
-          invoicePDF, // Attach the generated PDF as an attachment
-          "Invoice.pdf" // Name of the attachment
+           html,
+          // invoicePDF, // Attach the generated PDF as an attachment
+          // "Invoice.pdf" // Name of the attachment
         );
 
         // Save the updated order in the database
@@ -477,7 +477,7 @@
 
         const expectedDeliveryDate = moment(order.paidAt).add(3, 'days').format('MMMM Do YYYY');
 
-        const invoicePDF = await generateInvoice(order);
+        //const invoicePDF = await generateInvoice(order);
 
         const subject = `Payment Successful for Order #${order._id}`;
         const text = `Dear ${req.user.username},\n\nYour payment for Order #${order._id} was successful. The expected delivery date for your order is ${expectedDeliveryDate}.\n\nThank you for shopping with us!`;
@@ -572,7 +572,9 @@
         `;
 
         // Send the email to the user
-        await sendEmail(order.user.email, subject, text, html, invoicePDF, "Invoice.pdf");
+        await sendEmail(order.user.email, subject, text, html
+          // , invoicePDF, "Invoice.pdf"
+        );
 
         const updatedOrder = await order.save();
 
