@@ -27,7 +27,10 @@ const app = express();
 // Enable CORS for the frontend URL
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // Make sure this is the correct URL for your frontend
+    origin:  [
+      "http://localhost:5173", 
+      "https://e-comm-jpql.onrender.com",
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
@@ -64,7 +67,10 @@ const server = http.createServer(app);
 // Set up socket.io
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL, // Your frontend URL for production
+    origin:  [
+      "http://localhost:5173", 
+      "https://e-comm-jpql.onrender.com",
+    ], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },

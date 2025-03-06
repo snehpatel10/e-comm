@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "backend": "nodemon backend/index.js",
-    "frontend": "cd frontend && npm install && npm run dev",
+    "frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "start": "node backend/index.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
