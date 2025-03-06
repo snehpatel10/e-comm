@@ -172,7 +172,7 @@
         );
 
         if (!matchingItemFromDB) {
-          res.status(404);
+          res.status(500);
           throw new Error(`Product not found: ${itemFromClient._id}`);
         }
 
@@ -296,7 +296,7 @@
               res.json(order)
           }
           else {
-              res.status(404)
+              res.status(500)
               throw new Error('Order not found')
           }
       } catch (error) {
@@ -431,7 +431,7 @@
         // Return the updated order response to the client
         res.status(200).json(updatedOrder);
       } else {
-        res.status(404);
+        res.status(500);
         throw new Error('Order not found');
       }
     } catch (error) {
@@ -452,7 +452,7 @@
               res.json(updatedOrder)
           }
           else {
-              res.status(404)
+              res.status(500)
               throw new Error('Order not found')
           }
       } catch (error) {
@@ -577,7 +577,7 @@
 
         res.status(200).json(updatedOrder);
       } else {
-        res.status(404);
+        res.status(500);
         throw new Error('Order not found');
       }
     } catch (error) {

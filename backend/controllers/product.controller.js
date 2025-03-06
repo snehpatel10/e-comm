@@ -100,12 +100,12 @@ export const fetchProductById = asyncHandler(async (req, res) => {
     if (product) {
       return res.json(product);
     } else {
-      res.status(404);
+      res.status(500);
       throw new Error("Product not found");
     }
   } catch (error) {
     console.error(error);
-    res.status(404).json("Product not found");
+    res.status(500).json("Product not found");
   }
 });
 
@@ -155,7 +155,7 @@ export const addProductReview = asyncHandler(async (req, res) => {
       await product.save();
       res.status(201).json({ message: "Review added" });
     } else {
-      res.status(404);
+      res.status(500);
       throw new Error("Product not found");
     }
   } catch (error) {

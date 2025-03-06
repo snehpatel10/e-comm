@@ -63,7 +63,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       throw new Error("Invalid email or password");
     }
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -92,7 +92,7 @@ export const getCurrenUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
     });
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -118,7 +118,7 @@ export const updateCurrentUserProfile = asyncHandler(async (req, res) => {
       isAdmin: updatedUser.isAdmin,
     });
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -135,7 +135,7 @@ export const deleteUserById = asyncHandler(async (req, res) => {
     await User.deleteOne({ _id: user._id });
     res.json({ message: "User removed" });
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -146,7 +146,7 @@ export const getUserById = asyncHandler(async (req, res) => {
   if (user) {
     res.json(user);
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -171,7 +171,7 @@ export const updateUserById = asyncHandler(async (req, res) => {
       isAdmin: updatedUser.isAdmin,
     });
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("User not found");
   }
 });
@@ -195,7 +195,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(404);
+      res.status(500);
       throw new Error("User not found");
     }
 
@@ -314,7 +314,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ 
+      return res.status(500).json({ 
         success: false,
         message: 'User not found' 
       });
@@ -344,7 +344,7 @@ export const deleteAccount = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-      res.status(404);
+      res.status(500);
       throw new Error("User not found");
     }
 
