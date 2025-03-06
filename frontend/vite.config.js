@@ -3,8 +3,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:5000',
-      '/upload': 'http://localhost:5000',
+      '/api': 'https://e-comm-jpql.onrender.com',
+      '/upload': 'https://e-comm-jpql.onrender.com',
     },
   },
 
@@ -21,6 +21,11 @@ export default defineConfig({
     
     rollupOptions: {
       output: {
+/*************  ✨ Codeium Command ⭐  *************/
+        // Manual chunking for optimization. Vendor libraries are grouped together
+        // in a single chunk, while our code is left unbundled.
+        // https://rollupjs.org/guide/en/#output.manualchunks
+/******  a1170777-48db-478f-89d6-cd1971b9701e  *******/
         manualChunks(id) {
           if (id.includes('node_modules')) {
             return 'vendor';
