@@ -31,7 +31,7 @@
 
   const generateInvoice = async (order) => {
     const browser = await puppeteer.launch({
-      executablePath: process.env.CHROME_PATH
+      headless: true
     });
     const page = await browser.newPage();
 
