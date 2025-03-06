@@ -571,7 +571,9 @@
         `;
 
         // Send the email to the user
-        await sendEmail(order.user.email, subject, text, html, invoicePDF, "Invoice.pdf");
+        await sendEmail(order.user.email, subject, text, html
+          // , invoicePDF, "Invoice.pdf"
+        );
 
         const updatedOrder = await order.save();
 
