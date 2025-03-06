@@ -13,7 +13,7 @@ function Notification() {
     const fetchNotifications = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:5000/api/notification');
+        const response = await fetch('https://e-comm-jpql.onrender.com/api/notification');
         const data = await response.json();
         setLoading(false);
         setNotifications(data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
@@ -30,7 +30,7 @@ function Notification() {
 
     fetchNotifications();
 
-    socket.current = io('http://localhost:5000');
+    socket.current = io('https://e-comm-jpql.onrender.com');
 
     socket.current.on('orderCreated', (message) => {
       setNotifications((prevNotifications) => [message, ...prevNotifications]);
