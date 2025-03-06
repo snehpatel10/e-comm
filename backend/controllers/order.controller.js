@@ -30,11 +30,7 @@
   }
 
   const generateInvoice = async (order) => {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add sandboxing for cloud environments
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, // Use custom executable path if needed
-    });
+    const browser = await puppeteer.launch({executablePath: '/path/to/Chrome'});
     const page = await browser.newPage();
 
     // Prepare the HTML for the invoice
