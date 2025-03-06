@@ -9,32 +9,32 @@
   import { io } from "../index.js";
 
   function calcPrices(orderItems) {
-    // Calculate the price of the items
     const itemsPrice = orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
       0
     );
 
-    // Shipping price logic
     const shippingPrice = itemsPrice > 100 ? 0 : 10;
 
-    // Tax rate and calculation
     const taxRate = 0.15;
-    const taxPrice = (itemsPrice * taxRate).toFixed(2); // Rounded to 2 decimals
+    const taxPrice = (itemsPrice * taxRate).toFixed(2); 
 
-    // Total price calculation
     const totalPrice = itemsPrice + shippingPrice + parseFloat(taxPrice);
 
     return {
-      itemsPrice: itemsPrice.toFixed(2), // Round the item price to 2 decimals
-      shippingPrice: shippingPrice.toFixed(2), // Round shipping price to 2 decimals
+      itemsPrice: itemsPrice.toFixed(2), 
+      shippingPrice: shippingPrice.toFixed(2),
       taxPrice,
-      totalPrice: totalPrice.toFixed(2), // Round final total price to 2 decimals
+      totalPrice: totalPrice.toFixed(2), 
     };
   }
 
   const generateInvoice = async (order) => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add sandboxing for cloud environments
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, // Use custom executable path if needed
+    });
     const page = await browser.newPage();
 
     // Prepare the HTML for the invoice
