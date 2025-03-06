@@ -50,19 +50,14 @@ app.get("/api/config/paypal", (req, res) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 
-// Serve uploaded files (used in the frontend for product images, etc.)
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-// Serve the frontend files in production (after build)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "build"))); // Serve the build folder
+app.use(express.static(path.join(__dirname, '/frontend/build')))
 
-  // Serve index.html for all requests that don't match API routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-  });
-}
+app.get('*', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'))
+})
 
 const server = http.createServer(app);
 
