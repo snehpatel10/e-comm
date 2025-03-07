@@ -82,7 +82,7 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#121212]">
+    <div className="flex justify-center items-center h-screen bg-[#121212] mt-[1rem]">
       <section className="flex w-full max-w-5xl overflow-hidden">
         {/* Left Side: Image */}
         <div className="w-1/2 hidden lg:block">
