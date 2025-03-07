@@ -1,8 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  AiOutlineLogin,
-  AiOutlineUserAdd,
-} from "react-icons/ai";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./Navigation.css";
@@ -58,7 +54,7 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="w-full bg-[#1b1b1b] fixed top-0 left-0 z-50">
+    <div className="w-full bg-[#282828ac] fixed top-0 left-0 z-50 backdrop-blur-xl">
       <div className="flex justify-between items-center p-4">
         {/* Left side icons */}
         <div className="flex space-x-8">
@@ -71,23 +67,24 @@ const Navigation = () => {
         </div>
 
         {/* Centered navigation links */}
-        <div className="flex space-x-8 justify-center flex-1">
+        <div className="flex space-x-8 justify-center flex-1 relative">
           <NavLink
             to="/shop"
             className={({ isActive }) =>
               isActive
-                ? "text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-                : "text-white transition-transform transform hover:translate-x-2"
+                ? "text-pink-500 font-semibold relative group"
+                : "text-white relative group"
             }
           >
             Shop
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-pink-500 transition-all duration-300 ease-in-out group-hover:w-full"></span>
           </NavLink>
           <NavLink
             to="/cart"
             className={({ isActive }) =>
               isActive
-                ? "text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-                : "text-white transition-transform transform hover:translate-x-2"
+                ? "text-pink-500 font-semibold relative group"
+                : "text-white relative group"
             }
           >
             Cart
@@ -96,58 +93,63 @@ const Navigation = () => {
                 {cartItems.reduce((a, c) => a + c.qty, 0)}
               </span>
             )}
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-pink-500 transition-all duration-300 ease-in-out group-hover:w-full"></span>
           </NavLink>
           <NavLink
             to="/favorite"
             className={({ isActive }) =>
               isActive
-                ? "text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-                : "text-white transition-transform transform hover:translate-x-2"
+                ? "text-pink-500 font-semibold relative group"
+                : "text-white relative group"
             }
           >
             Favorite
             <FavoritesCount />
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-pink-500 transition-all duration-300 ease-in-out group-hover:w-full"></span>
           </NavLink>
           <NavLink
             to="/about"
             className={({ isActive }) =>
               isActive
-                ? "text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-                : "text-white transition-transform transform hover:translate-x-2"
+                ? "text-pink-500 font-semibold relative group"
+                : "text-white relative group"
             }
           >
             About
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-pink-500 transition-all duration-300 ease-in-out group-hover:w-full"></span>
           </NavLink>
           <NavLink
             to="/contact"
             className={({ isActive }) =>
               isActive
-                ? "text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-                : "text-white transition-transform transform hover:translate-x-2"
+                ? "text-pink-500 font-semibold relative group"
+                : "text-white relative group"
             }
           >
             Contact Us
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-pink-500 transition-all duration-300 ease-in-out group-hover:w-full"></span>
           </NavLink>
         </div>
+
 
         {/* Right side icons */}
         <div className="flex items-center space-x-8">
           {userInfo && userInfo.isAdmin && (
-           <NavLink
-           to="/admin/notification"
-           className={({ isActive }) =>
-             isActive
-               ? "relative flex items-center text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
-               : "relative flex items-center text-white transition-transform transform hover:translate-x-2"
-           }
-         >
-           <MdOutlineNotificationsNone size={26} />
-           {unreadNotificationsCount > 0 && (
-             <span className="absolute top-[-6px] right-[-6px] px-1 py-0 text-xs text-white bg-pink-500 rounded-full">
-               {unreadNotificationsCount}
-             </span>
-           )}
-         </NavLink>
+            <NavLink
+              to="/admin/notification"
+              className={({ isActive }) =>
+                isActive
+                  ? "relative flex items-center text-pink-500 font-semibold transition-transform transform hover:translate-x-2"
+                  : "relative flex items-center text-white transition-transform transform hover:translate-x-2"
+              }
+            >
+              <MdOutlineNotificationsNone size={26} />
+              {unreadNotificationsCount > 0 && (
+                <span className="absolute top-[-6px] right-[-6px] px-1 py-0 text-xs text-white bg-pink-500 rounded-full">
+                  {unreadNotificationsCount}
+                </span>
+              )}
+            </NavLink>
           )}
           {userInfo ? (
             <div className="relative">
@@ -203,13 +205,26 @@ const Navigation = () => {
             </div>
           ) : (
             <div className="flex space-x-4">
-              <Link to="/login" className="flex items-center text-white">
-                <AiOutlineLogin size={26} />
-                <span className="ml-2 hidden md:inline">Login</span>
+              <Link
+                to="/login"
+                className="relative flex items-center text-white group"
+              >
+                <span className=" hidden md:inline relative inline-block">
+                  Login
+                </span>
+                {/* Underline */}
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#ba65c7] transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
-              <Link to="/register" className="flex items-center text-white">
-                <AiOutlineUserAdd size={26} />
-                <span className="ml-2 hidden md:inline">Register</span>
+              <div className="ml-2"></div>
+              <Link
+                to="/register"
+                className="relative flex items-center text-white group"
+              >
+                <span className="hidden md:inline relative inline-block">
+                  Register
+                </span>
+                {/* Underline */}
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
             </div>
           )}
