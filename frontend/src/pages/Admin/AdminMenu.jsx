@@ -13,7 +13,7 @@ const AdminMenu = () => {
     <>
       {/* Button to toggle menu */}
       <button
-        className="top-[5rem] right-7 bg-[#151515] p-2 fixed rounded-lg"
+        className="top-[5rem] right-7 bg-[#484747] p-2 fixed rounded-lg"
         onClick={toggleMenu}
       >
         {isMenuOpen ? (
@@ -29,7 +29,7 @@ const AdminMenu = () => {
 
       {/* Dropdown menu, positioned below the button */}
       {isMenuOpen && (
-        <section className="bg-[#151515] p-4 fixed right-7 top-[7rem]">
+        <section className="bg-[#484747ab] p-3 fixed right-7 top-[7rem] backdrop-blur-3xl rounded-lg">
           <ul className="list-none mt-2">
             <li>
               <NavLink
@@ -88,7 +88,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
+                className="list-item py-2 px-3 block mb-1 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/orderlist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
