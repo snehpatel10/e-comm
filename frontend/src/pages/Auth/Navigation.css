@@ -26,12 +26,32 @@
   display: flex;
   align-items: center;
   padding: 10px 15px;
+  position: relative; /* Make sure we can position pseudo-element relative to this link */
+  overflow: hidden;  /* Hide the box overflow */
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
+.navbar-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of the link */
+  height: 100%; /* Full height of the link */
+  background-color: #ff4081; /* Color of the box */
+  transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
+  transform: scaleX(0); /* Initially the box is scaled down to zero */
+  transform-origin: bottom right; /* Start expanding from bottom-right */
+}
+
 .navbar-link:hover {
-  color: #ff4081;
+  color: white; /* Optional: change text color when hovered */
   transform: translateX(10px);
+}
+
+.navbar-link:hover::before {
+  transform: scaleX(1); /* On hover, the box expands to full size */
+  transform-origin: bottom left; /* The box expands from bottom-left */
 }
 
 .navbar-link svg {
